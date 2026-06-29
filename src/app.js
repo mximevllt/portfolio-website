@@ -19,6 +19,7 @@ const projects = [
   {
     slug: "alta",
     title: "Alta",
+    href: "alta.html",
     images: [
       { file: "Alta 02.jpg", orientation: "square" },
       { file: "Alta 01.jpg", orientation: "landscape" },

@@ -179,9 +179,9 @@ body.menu-open .site-menu {
   position: relative;
   width: max-content;
   font-family: "Funnel Display", ui-sans-serif, system-ui, sans-serif;
-  font-size: clamp(2.6rem, 8vw, 5.8rem);
+  font-size: clamp(1.9rem, 5.6vw, 4.1rem);
   font-weight: 500;
-  line-height: 0.92;
+  line-height: 0.96;
   letter-spacing: 0;
   opacity: 0;
   transform: translateY(28px);
@@ -199,10 +199,6 @@ body.menu-open .site-menu a:nth-child(1) {
 
 body.menu-open .site-menu a:nth-child(2) {
   transition-delay: 150ms;
-}
-
-body.menu-open .site-menu a:nth-child(3) {
-  transition-delay: 210ms;
 }
 
 .site-menu a::after {
@@ -297,7 +293,7 @@ body.menu-open .site-menu a:nth-child(3) {
 
 .projects-section {
   min-height: 100svh;
-  padding: clamp(70px, 11vw, 140px) 0 clamp(80px, 12vw, 150px);
+  padding: clamp(70px, 11vw, 140px) 0 clamp(70px, 10vw, 130px);
   background: var(--background);
   color: var(--text);
 }
@@ -475,6 +471,102 @@ body.menu-open .site-menu a:nth-child(3) {
   transform: scale(0.985);
 }
 
+.contact-section {
+  padding: clamp(76px, 11vw, 150px) clamp(22px, 5vw, 72px) clamp(84px, 12vw, 160px);
+  color: var(--background);
+  background: var(--text);
+}
+
+.contact-inner {
+  width: min(100%, 1180px);
+  display: grid;
+  grid-template-columns: minmax(220px, 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(42px, 8vw, 120px);
+  margin: 0 auto;
+}
+
+.contact-heading p {
+  margin: 0 0 14px;
+  color: rgba(255, 250, 244, 0.62);
+  font-size: 0.78rem;
+  font-weight: 300;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.contact-heading h2 {
+  max-width: 520px;
+  margin: 0;
+  font-size: clamp(2.25rem, 5.8vw, 5.4rem);
+  line-height: 0.95;
+}
+
+.contact-content {
+  align-self: end;
+  display: grid;
+  gap: clamp(34px, 5vw, 58px);
+}
+
+.contact-content > p {
+  max-width: 690px;
+  margin: 0;
+  color: rgba(255, 250, 244, 0.78);
+  font-size: clamp(1rem, 1.45vw, 1.24rem);
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+.contact-details {
+  display: grid;
+  gap: 16px;
+  font-style: normal;
+}
+
+.contact-details a {
+  position: relative;
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  color: var(--background);
+  font-family: "Gambarino", Georgia, serif;
+  font-size: clamp(1.55rem, 3.8vw, 3.8rem);
+  font-weight: 400;
+  line-height: 1.04;
+  overflow-wrap: anywhere;
+  transition: color 260ms ease, transform 420ms var(--ease-out);
+}
+
+.contact-details a:first-child {
+  font-size: clamp(1.28rem, 2.8vw, 3rem);
+}
+
+.contact-details a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 420ms var(--ease-out);
+}
+
+.contact-details a:hover {
+  color: rgba(255, 250, 244, 0.72);
+  transform: translateX(8px);
+}
+
+.contact-details a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.contact-details a:active {
+  transform: translateX(8px) scale(0.98);
+}
+
 [data-animate] {
   opacity: 0;
   transform: translateY(24px);
@@ -587,6 +679,24 @@ body.menu-open .site-menu a:nth-child(3) {
   .project-preview__frame.is-mobile-image {
     display: block;
   }
+
+  .contact-section {
+    padding-inline: 18px;
+  }
+
+  .contact-inner {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .contact-content {
+    gap: 30px;
+  }
+
+  .contact-details a {
+    width: 100%;
+    font-size: clamp(1.32rem, 7vw, 2.4rem);
+  }
 }
 
 .project-detail-page {
@@ -616,7 +726,8 @@ body.menu-open .site-menu a:nth-child(3) {
 }
 
 .agora-page figure,
-.perchee-page figure {
+.perchee-page figure,
+.alta-page figure {
   margin: 0;
 }
 
@@ -1448,11 +1559,273 @@ body.menu-open .site-menu a:nth-child(3) {
   object-fit: contain;
 }
 
+.alta-page {
+  --alta-line: rgba(56, 43, 43, 0.18);
+}
+
+.alta-page img {
+  width: 100%;
+}
+
+.alta-hero {
+  min-height: calc(100svh - var(--nav-height));
+  display: grid;
+  grid-template-columns: minmax(260px, 0.34fr) minmax(0, 0.66fr);
+  gap: clamp(28px, 5vw, 90px);
+  align-items: end;
+}
+
+.alta-hero__copy {
+  align-self: center;
+}
+
+.alta-hero__copy h1 {
+  margin: clamp(20px, 3vw, 44px) 0 clamp(20px, 3vw, 42px);
+  font-family: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(1.18rem, 2vw, 2.35rem);
+  font-weight: 300;
+  line-height: 1.16;
+}
+
+.alta-hero__copy > p:not(.project-kicker) {
+  display: inline-flex;
+  padding-top: 14px;
+  border-top: 1px solid var(--text);
+  font-size: clamp(0.74rem, 0.95vw, 0.94rem);
+  font-style: italic;
+}
+
+.alta-hero__image img {
+  max-height: calc(100svh - var(--nav-height) - 96px);
+  object-fit: contain;
+}
+
+.alta-intro {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.28fr) minmax(0, 0.72fr);
+  gap: clamp(30px, 5vw, 86px);
+  border-top: 1px solid var(--alta-line);
+}
+
+.alta-intro .section-copy h2,
+.alta-landscape h2,
+.alta-system h2,
+.alta-interior h2,
+.alta-desk h2,
+.alta-terrace h2,
+.alta-documents h2 {
+  margin: 0 0 clamp(22px, 3vw, 44px);
+  font-family: "Gambarino", Georgia, serif;
+  font-size: clamp(2.45rem, 5vw, 6.3rem);
+  font-weight: 400;
+  line-height: 0.96;
+}
+
+.alta-landscape {
+  display: grid;
+  grid-template-columns: minmax(0, 0.62fr) minmax(260px, 0.38fr);
+  gap: clamp(24px, 4vw, 70px);
+  align-items: start;
+}
+
+.alta-landscape__wide {
+  grid-column: 1 / -1;
+}
+
+.alta-landscape__wide img {
+  max-height: 76svh;
+  object-fit: contain;
+}
+
+.alta-landscape__copy {
+  align-self: end;
+}
+
+.alta-season-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 0.68fr) minmax(280px, 0.32fr);
+  gap: clamp(16px, 2.4vw, 34px);
+  align-items: stretch;
+}
+
+.alta-season-grid img,
+.alta-terrace__grid img,
+.alta-gallery img {
+  display: block;
+  object-fit: cover;
+}
+
+.alta-season-grid__cliff {
+  grid-column: auto;
+}
+
+.alta-season-grid__cliff img {
+  height: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.alta-season-grid__detail {
+  grid-column: auto;
+}
+
+.alta-season-grid__detail img {
+  height: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.alta-system {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.34fr) minmax(0, 0.66fr);
+  gap: clamp(28px, 5vw, 88px);
+  align-items: center;
+  border-top: 1px solid var(--alta-line);
+}
+
+.alta-system__copy p,
+.alta-desk__copy p,
+.alta-documents .section-copy p {
+  margin: 0 0 1.2em;
+  font-size: clamp(0.88rem, 1vw, 1.04rem);
+  font-weight: 300;
+  line-height: 1.45;
+}
+
+.alta-system__drawings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 30px);
+}
+
+.alta-system__drawings figure {
+  padding: clamp(10px, 1.4vw, 18px);
+  border: 1px solid rgba(56, 43, 43, 0.14);
+  background: rgba(255, 250, 244, 0.62);
+}
+
+.alta-system__drawings img {
+  object-fit: contain;
+}
+
+.alta-system__structure {
+  grid-column: 1 / -1;
+}
+
+.alta-interior {
+  border-top: 1px solid var(--alta-line);
+}
+
+.alta-interior .section-copy {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.34fr) minmax(0, 0.66fr);
+  gap: clamp(30px, 5vw, 86px);
+  margin-bottom: clamp(28px, 4vw, 64px);
+}
+
+.alta-interior__mosaic {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.36fr) minmax(0, 0.64fr);
+  gap: clamp(18px, 2.5vw, 38px);
+  align-items: start;
+}
+
+.alta-interior__large {
+  grid-column: 1 / -1;
+}
+
+.alta-interior__mosaic img {
+  height: auto;
+  object-fit: contain;
+}
+
+.alta-interior__large img {
+  max-height: 74svh;
+  object-fit: contain;
+}
+
+.alta-desk {
+  display: grid;
+  grid-template-columns: minmax(0, 0.66fr) minmax(260px, 0.34fr);
+  gap: clamp(26px, 4vw, 72px);
+  align-items: end;
+}
+
+.alta-desk__image img {
+  max-height: 78svh;
+  object-fit: contain;
+}
+
+.alta-terrace {
+  display: grid;
+  gap: clamp(28px, 4vw, 64px);
+  border-top: 1px solid var(--alta-line);
+}
+
+.alta-terrace__copy {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.34fr) minmax(0, 0.66fr);
+  gap: clamp(30px, 5vw, 86px);
+}
+
+.alta-terrace__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.54fr) minmax(0, 0.46fr);
+  gap: clamp(18px, 2.5vw, 38px);
+  align-items: start;
+}
+
+.alta-terrace__grid img {
+  aspect-ratio: 16 / 9;
+}
+
+.alta-gallery {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr);
+  justify-content: end;
+  gap: clamp(16px, 2.4vw, 34px);
+  align-items: start;
+}
+
+.alta-gallery img {
+  aspect-ratio: 16 / 9;
+}
+
+.alta-documents {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.3fr) minmax(0, 0.7fr);
+  gap: clamp(30px, 5vw, 86px);
+  padding-bottom: clamp(80px, 9vw, 140px);
+  border-top: 1px solid var(--alta-line);
+}
+
+.alta-document-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 30px);
+}
+
+.alta-document-grid figure {
+  padding: clamp(10px, 1.4vw, 18px);
+  border: 1px solid rgba(56, 43, 43, 0.14);
+  background: rgba(255, 250, 244, 0.62);
+}
+
+.alta-document-grid img {
+  object-fit: contain;
+}
+
 @media (max-width: 1180px) {
   .agora-hero,
   .detail-grid--living,
   .detail-grid--workshop,
-  .agora-plans {
+  .agora-plans,
+  .alta-hero,
+  .alta-intro,
+  .alta-system,
+  .alta-interior .section-copy,
+  .alta-desk,
+  .alta-terrace__copy,
+  .alta-documents {
     grid-template-columns: 1fr;
   }
 
@@ -1469,6 +1842,11 @@ body.menu-open .site-menu a:nth-child(3) {
 
   .perchee-lavender__wide {
     padding-top: 0;
+  }
+
+  .alta-hero__image img,
+  .alta-desk__image img {
+    max-height: none;
   }
 
   .manifesto-title,
@@ -1513,7 +1891,10 @@ body.menu-open .site-menu a:nth-child(3) {
   .rolex-main-board,
   .rolex-plan,
   .perchee-threshold__olive,
-  .perchee-threshold__ladder {
+  .perchee-threshold__ladder,
+  .alta-landscape,
+  .alta-interior__mosaic,
+  .alta-terrace__grid {
     grid-template-columns: 1fr;
   }
 
@@ -1526,6 +1907,19 @@ body.menu-open .site-menu a:nth-child(3) {
   .perchee-threshold__ladder figure,
   .rolex-detail-image {
     justify-self: start;
+  }
+
+  .alta-interior__large {
+    grid-row: auto;
+  }
+
+  .alta-interior__mosaic img,
+  .alta-season-grid__cliff img,
+  .alta-season-grid__detail img,
+  .alta-terrace__grid img {
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: contain;
   }
 }
 
@@ -1547,6 +1941,10 @@ body.menu-open .site-menu a:nth-child(3) {
   .agora-totem-inline,
   .perchee-centre,
   .perchee-centre__notes,
+  .alta-season-grid,
+  .alta-system__drawings,
+  .alta-gallery,
+  .alta-document-grid,
   .manifesto-card--bouquet,
   .manifesto-card--resource,
   .manifesto-card--candles {
@@ -1555,6 +1953,17 @@ body.menu-open .site-menu a:nth-child(3) {
 
   .perchee-hero {
     min-height: auto;
+  }
+
+  .alta-hero {
+    min-height: auto;
+    gap: 34px;
+  }
+
+  .alta-season-grid__cliff,
+  .alta-season-grid__detail,
+  .alta-system__structure {
+    grid-column: auto;
   }
 
   .perchee-centre__main img {
