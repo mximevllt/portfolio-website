@@ -105,6 +105,36 @@ h3 {
   background: var(--text);
 }
 
+.nav-brand {
+  position: absolute;
+  z-index: 22;
+  top: 50%;
+  left: 50%;
+  width: clamp(74px, 8vw, 116px);
+  display: block;
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  transition: opacity 520ms ease, transform 620ms var(--ease-out);
+}
+
+.nav-brand img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.nav-brand--home {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, calc(-50% + 12px));
+}
+
+body.home-past-hero .nav-brand--home {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+}
+
 .menu-toggle {
   position: relative;
   z-index: 30;
@@ -696,6 +726,46 @@ body.menu-open .site-menu a:nth-child(2) {
   .contact-details a {
     width: 100%;
     font-size: clamp(1.32rem, 7vw, 2.4rem);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .flowing-menu__item:hover {
+    border-bottom-color: rgba(56, 43, 43, 0.34);
+    color: var(--text);
+    background: var(--background);
+  }
+
+  .flowing-menu__item:hover .project-index {
+    color: rgba(56, 43, 43, 0.56);
+  }
+
+  .flowing-menu__item:hover .project-title em {
+    color: rgba(56, 43, 43, 0.68);
+  }
+
+  .flowing-menu__item.has-gallery:hover .project-preview {
+    max-height: 0;
+    opacity: 0;
+  }
+
+  .flowing-menu__item.is-active {
+    border-bottom-color: rgba(255, 250, 244, 0.26);
+    color: var(--background);
+    background: var(--text);
+  }
+
+  .flowing-menu__item.is-active .project-index {
+    color: rgba(255, 250, 244, 0.62);
+  }
+
+  .flowing-menu__item.is-active .project-title em {
+    color: rgba(255, 250, 244, 0.72);
+  }
+
+  .flowing-menu__item.has-gallery.is-active .project-preview {
+    max-height: 260px;
+    opacity: 1;
   }
 }
 

@@ -3,6 +3,7 @@ const menuLinks = document.querySelectorAll(".site-menu a");
 const dotCanvas = document.querySelector("#dotField");
 const flowingMenu = document.querySelector(".flowing-menu");
 const heroScrollLink = document.querySelector(".hero-scroll");
+const homeHero = document.querySelector(".hero");
 
 const projects = [
   {
@@ -158,6 +159,33 @@ if (document.body.classList.contains("hero-locked") && window.location.hash) {
   document.body.classList.remove("hero-locked");
 }
 
+if (homeHero) {
+  let ticking = false;
+
+  function updateHomeBrandVisibility() {
+    const navHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--nav-height")) || 0;
+    const threshold = Math.max(0, homeHero.offsetTop + homeHero.offsetHeight - navHeight);
+    document.body.classList.toggle("home-past-hero", window.scrollY >= threshold - 1);
+    ticking = false;
+  }
+
+  function requestHomeBrandUpdate() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(updateHomeBrandVisibility);
+  }
+
+  window.addEventListener("scroll", requestHomeBrandUpdate, { passive: true });
+  window.addEventListener("resize", requestHomeBrandUpdate);
+  window.addEventListener("hashchange", () => {
+    if (window.location.hash) {
+      document.body.classList.remove("hero-locked");
+    }
+    window.setTimeout(requestHomeBrandUpdate, 80);
+  });
+  updateHomeBrandVisibility();
+}
+
 const animatedBlocks = document.querySelectorAll("[data-animate]");
 const flowingItems = document.querySelectorAll(".flowing-menu__item");
 const smoothAnchorLinks = document.querySelectorAll('a[href^="#"]');
@@ -255,13 +283,29 @@ animatedBlocks.forEach((block, index) => {
   revealObserver.observe(block);
 });
 
+const touchAccordion = window.matchMedia("(hover: none), (pointer: coarse)");
+
+function setActiveProjectItem(activeItem) {
+  flowingItems.forEach((item) => {
+    item.classList.toggle("is-active", item === activeItem);
+  });
+}
+
 flowingItems.forEach((item) => {
   item.addEventListener("pointerenter", () => {
-    item.classList.add("is-active");
+    setActiveProjectItem(item);
+  });
+
+  item.addEventListener("pointerdown", () => {
+    if (touchAccordion.matches) {
+      setActiveProjectItem(item);
+    }
   });
 
   item.addEventListener("pointerleave", () => {
-    item.classList.remove("is-active");
+    if (!touchAccordion.matches) {
+      item.classList.remove("is-active");
+    }
   });
 });
 
