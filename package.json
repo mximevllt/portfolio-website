@@ -1,0 +1,11 @@
+{
+  "name": "lovable-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node dev-server.mjs",
+    "build": "node scripts/build.mjs",
+    "start": "node dev-server.mjs"
+  }
+}

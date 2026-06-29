@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maxime Vallat - Architecture & Design</title>
+    <meta name="description" content="Portfolio d'architecture et de design de Maxime Vallat." />
+    <link rel="icon" type="image/png" href="/assets/logo-marron.png" />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body class="hero-locked">
+    <header class="site-header" data-animate>
+      <button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="siteMenu">
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-menu" id="siteMenu" aria-label="Navigation principale">
+        <a href="#projets">Projets</a>
+        <a href="#studio">Studio</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-label="Accueil">
+        <canvas class="dot-field" id="dotField" aria-hidden="true"></canvas>
+
+        <div class="hero-logo-wrap" data-animate>
+          <img class="hero-logo" src="/assets/logo-marron.png" alt="Maxime Vallat" />
+        </div>
+
+        <a class="hero-scroll" href="#projets" aria-label="Descendre vers les projets" data-animate>
+          <span></span>
+        </a>
+      </section>
+
+      <section class="projects-section" id="projets" aria-label="Projets selectionnes">
+        <div class="section-heading" data-animate>
+          <p>Projets selectionnes</p>
+          <h2>Projets</h2>
+        </div>
+
+        <nav class="flowing-menu" aria-label="Liste des projets" data-animate></nav>
+      </section>
+    </main>
+
+    <script src="/src/app.js"></script>
+  </body>
+</html>
