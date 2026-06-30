@@ -110,6 +110,16 @@ function renderProjectNote(project) {
   return project.note ? `<span class="project-note">${project.note}</span>` : "";
 }
 
+function renderProjectUnavailable(project) {
+  if (!project.note || project.href) return "";
+
+  return `
+    <span class="project-unavailable">
+      Les détails de ce projet ne sont pas encore disponibles sur le site. Une présentation complète sera ajoutée prochainement.
+    </span>
+  `;
+}
+
 function renderProjectGallery(project) {
   if (!project.images.length) {
     return "";
@@ -130,6 +140,7 @@ function renderProjectGallery(project) {
   return `
     <span class="project-preview ${layout}" aria-hidden="true">
       <span class="project-preview__grid">${images}</span>
+      ${renderProjectUnavailable(project)}
     </span>
   `;
 }
@@ -141,9 +152,10 @@ function renderProjects() {
     .map((project, index) => {
       const number = String(index + 1).padStart(2, "0");
       const hasGallery = project.images.length ? " has-gallery" : "";
+      const hasUnavailableNote = project.note && !project.href ? " has-unavailable-note" : "";
 
       return `
-        <a class="flowing-menu__item${hasGallery}" href="${project.href || `#${project.slug}`}">
+        <a class="flowing-menu__item${hasGallery}${hasUnavailableNote}" href="${project.href || `#${project.slug}`}">
           <span class="project-link">
             <span class="project-index">${number}</span>
             ${renderProjectTitle(project)}
