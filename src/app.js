@@ -4,6 +4,7 @@ const dotCanvas = document.querySelector("#dotField");
 const flowingMenu = document.querySelector(".flowing-menu");
 const heroScrollLink = document.querySelector(".hero-scroll");
 const homeHero = document.querySelector(".hero");
+const heroLogoWrap = document.querySelector(".hero-logo-wrap");
 
 const projects = [
   {
@@ -71,15 +72,6 @@ const projects = [
     images: [
       { file: "Bâtiment S 01.png", orientation: "landscape" },
       { file: "Bâtiment S 02.png", orientation: "landscape" }
-    ]
-  },
-  {
-    slug: "salle-a-manger-saint-tropez",
-    title: "Salle à Manger Résidentielle",
-    suffix: "- Saint-Tropez",
-    images: [
-      { file: "salle à manger 01.jpg", orientation: "landscape" },
-      { file: "Salle à manger 02.jpg", orientation: "landscape" }
     ]
   },
   {
@@ -185,6 +177,146 @@ if (homeHero) {
   });
   updateHomeBrandVisibility();
 }
+
+function initHeroLiquidCursor() {
+  const canUseHeroCursor = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!homeHero || !heroScrollLink || !canUseHeroCursor || reducedMotion || window.innerWidth <= 740) {
+    return;
+  }
+
+  const cursor = document.createElement("div");
+  cursor.className = "hero-liquid-cursor";
+  cursor.setAttribute("aria-hidden", "true");
+  document.body.append(cursor);
+
+  let x = window.innerWidth / 2;
+  let y = window.innerHeight / 2;
+  let targetX = x;
+  let targetY = y;
+  let isVisible = false;
+  let isSnappedToArrow = false;
+  let isForwardingClick = false;
+  let frame = 0;
+
+  function isInsideHero(clientX, clientY) {
+    const heroRect = homeHero.getBoundingClientRect();
+    return clientX >= heroRect.left && clientX <= heroRect.right && clientY >= heroRect.top && clientY <= heroRect.bottom;
+  }
+
+  function setHeroCursorVisible(visible) {
+    isVisible = visible && !document.body.classList.contains("home-past-hero");
+    document.body.classList.toggle("hero-cursor-active", isVisible);
+    cursor.classList.toggle("is-visible", isVisible);
+  }
+
+  function updatePointer(event) {
+    targetX = event.clientX;
+    targetY = event.clientY;
+    setHeroCursorVisible(isInsideHero(event.clientX, event.clientY));
+  }
+
+  function refreshVisibility() {
+    setHeroCursorVisible(isInsideHero(targetX, targetY));
+  }
+
+  function updateLogoMask(cursorX, cursorY, radiusX, radiusY, angle) {
+    if (!heroLogoWrap) return;
+
+    const logoRect = heroLogoWrap.getBoundingClientRect();
+    const intersectsLogo =
+      isVisible &&
+      cursorX + radiusX >= logoRect.left &&
+      cursorX - radiusX <= logoRect.right &&
+      cursorY + radiusY >= logoRect.top &&
+      cursorY - radiusY <= logoRect.bottom;
+
+    heroLogoWrap.classList.toggle("is-logo-masked", intersectsLogo);
+
+    if (!intersectsLogo) return;
+
+    const centerX = cursorX - logoRect.left;
+    const centerY = cursorY - logoRect.top;
+    const insetRadiusX = radiusX;
+    const insetRadiusY = radiusY;
+    const points = [];
+    const segments = 44;
+
+    for (let index = 0; index < segments; index += 1) {
+      const theta = (index / segments) * Math.PI * 2;
+      const ellipseX = Math.cos(theta) * insetRadiusX;
+      const ellipseY = Math.sin(theta) * insetRadiusY;
+      const rotatedX = ellipseX * Math.cos(angle) - ellipseY * Math.sin(angle);
+      const rotatedY = ellipseX * Math.sin(angle) + ellipseY * Math.cos(angle);
+      points.push(`${centerX + rotatedX}px ${centerY + rotatedY}px`);
+    }
+
+    heroLogoWrap.style.setProperty("--logo-mask-x", `${centerX}px`);
+    heroLogoWrap.style.setProperty("--logo-mask-y", `${centerY}px`);
+    heroLogoWrap.style.setProperty("--logo-mask-rx", `${insetRadiusX}px`);
+    heroLogoWrap.style.setProperty("--logo-mask-ry", `${insetRadiusY}px`);
+    heroLogoWrap.style.setProperty("--logo-mask-polygon", `polygon(${points.join(", ")})`);
+  }
+
+  function render(time = 0) {
+    const arrowRect = heroScrollLink.getBoundingClientRect();
+    const arrowX = arrowRect.left + arrowRect.width / 2;
+    const arrowY = arrowRect.top + arrowRect.height / 2;
+    const heroRect = homeHero.getBoundingClientRect();
+    const dx = arrowX - targetX;
+    const dy = arrowY - targetY;
+    const distance = Math.hypot(dx, dy);
+    const isOrbiting = isVisible && distance < 180;
+    const angle = Math.atan2(dy, dx);
+    const pull = Math.max(0, 1 - Math.min(distance, 420) / 420);
+    const stretch = 1 + pull * 0.74;
+    const squeeze = 1 - pull * 0.18;
+    const maskRadiusX = isOrbiting ? 32 : 27 * stretch;
+    const maskRadiusY = isOrbiting ? 32 : 27 * squeeze;
+
+    const destinationX = isOrbiting ? arrowX : targetX;
+    const destinationY = isOrbiting ? Math.min(arrowY, heroRect.bottom - 34) : targetY;
+
+    x += (destinationX - x) * (isOrbiting ? 0.22 : 0.14);
+    y += (destinationY - y) * (isOrbiting ? 0.22 : 0.14);
+    isSnappedToArrow = isOrbiting;
+
+    cursor.classList.toggle("is-orbiting", isOrbiting);
+    heroScrollLink.classList.toggle("is-cursor-target", isOrbiting);
+    cursor.style.setProperty("--cursor-rotate", `${angle}rad`);
+    cursor.style.setProperty("--cursor-scale-x", isOrbiting ? "1" : String(stretch));
+    cursor.style.setProperty("--cursor-scale-y", isOrbiting ? "1" : String(squeeze));
+    cursor.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) rotate(var(--cursor-rotate)) scale(var(--cursor-scale-x), var(--cursor-scale-y))`;
+    updateLogoMask(x, y, maskRadiusX, maskRadiusY, isOrbiting ? 0 : angle);
+
+    frame = requestAnimationFrame(render);
+  }
+
+  window.addEventListener("pointermove", updatePointer, { passive: true });
+  window.addEventListener("scroll", refreshVisibility, { passive: true });
+  window.addEventListener("resize", refreshVisibility);
+  window.addEventListener("click", () => {
+    if (isVisible && isSnappedToArrow && !isForwardingClick) {
+      isForwardingClick = true;
+      heroScrollLink.click();
+      window.setTimeout(() => {
+        isForwardingClick = false;
+      }, 0);
+    }
+  });
+  homeHero.addEventListener("pointerleave", () => setHeroCursorVisible(false));
+  heroScrollLink.addEventListener("click", () => setHeroCursorVisible(false));
+
+  render();
+
+  window.addEventListener("beforeunload", () => {
+    cancelAnimationFrame(frame);
+    cursor.remove();
+  });
+}
+
+initHeroLiquidCursor();
 
 const animatedBlocks = document.querySelectorAll("[data-animate]");
 const flowingItems = document.querySelectorAll(".flowing-menu__item");
