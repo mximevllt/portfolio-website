@@ -1,5 +1,7 @@
 # Portfolio visit tracking
 
+Status: dormant. The API, admin page, and Supabase schema are kept in the project, but public pages do not load `src/tracking.js` for now. Re-enable it by adding `<script src="/src/tracking.js"></script>` before `</body>` on the public HTML pages.
+
 ## 1. Supabase
 
 1. Create a Supabase project.
