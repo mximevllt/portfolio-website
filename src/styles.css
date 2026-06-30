@@ -392,7 +392,7 @@ body.hero-cursor-active * {
 }
 
 .section-heading {
-  width: min(100% - 44px, 980px);
+  width: min(100% - 84px, 1240px);
   margin: 0 auto clamp(44px, 8vw, 86px);
 }
 
@@ -709,14 +709,6 @@ body.hero-cursor-active * {
     transform: none;
   }
 
-  body.hero-cursor-active,
-  body.hero-cursor-active * {
-    cursor: auto !important;
-  }
-
-  .hero-liquid-cursor {
-    display: none;
-  }
 }
 
 @media (max-width: 740px) {

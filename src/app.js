@@ -5,6 +5,7 @@ const flowingMenu = document.querySelector(".flowing-menu");
 const heroScrollLink = document.querySelector(".hero-scroll");
 const homeHero = document.querySelector(".hero");
 const heroLogoWrap = document.querySelector(".hero-logo-wrap");
+const siteHeader = document.querySelector(".site-header");
 
 const projects = [
   {
@@ -192,7 +193,7 @@ function initHeroLiquidCursor() {
   const canUseHeroCursor = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (!homeHero || !heroScrollLink || !canUseHeroCursor || reducedMotion || window.innerWidth <= 740) {
+  if (!homeHero || !heroScrollLink || !canUseHeroCursor || reducedMotion) {
     return;
   }
 
@@ -212,7 +213,15 @@ function initHeroLiquidCursor() {
 
   function isInsideHero(clientX, clientY) {
     const heroRect = homeHero.getBoundingClientRect();
-    return clientX >= heroRect.left && clientX <= heroRect.right && clientY >= heroRect.top && clientY <= heroRect.bottom;
+    const headerRect = siteHeader?.getBoundingClientRect();
+    const isInsideHeader =
+      headerRect &&
+      clientX >= headerRect.left &&
+      clientX <= headerRect.right &&
+      clientY >= headerRect.top &&
+      clientY <= headerRect.bottom;
+
+    return !isInsideHeader && clientX >= heroRect.left && clientX <= heroRect.right && clientY >= heroRect.top && clientY <= heroRect.bottom;
   }
 
   function setHeroCursorVisible(visible) {
@@ -316,6 +325,7 @@ function initHeroLiquidCursor() {
     }
   });
   homeHero.addEventListener("pointerleave", () => setHeroCursorVisible(false));
+  siteHeader?.addEventListener("pointerenter", () => setHeroCursorVisible(false));
   heroScrollLink.addEventListener("click", () => setHeroCursorVisible(false));
 
   render();
@@ -454,7 +464,7 @@ flowingItems.forEach((item) => {
 if (dotCanvas) {
   const context = dotCanvas.getContext("2d");
   const config = {
-    dotRadius: 0.3,
+    dotRadius: 0.66,
     dotSpacing: 19,
     bulgeStrength: 14,
     sparkle: false,
@@ -522,8 +532,8 @@ if (dotCanvas) {
       const angle = Math.atan2(dy, dx);
       const x = dot.x + Math.cos(angle) * push;
       const y = dot.y + Math.sin(angle) * push + wave;
-      const radius = config.dotRadius + influence * config.cursorForce * 2.1;
-      const alpha = 0.22 + influence * 0.5;
+      const radius = config.dotRadius;
+      const alpha = 0.34 + influence * 0.38;
 
       context.globalAlpha = alpha;
       context.beginPath();
