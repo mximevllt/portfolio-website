@@ -817,14 +817,6 @@ body.hero-cursor-active * {
     font-size: clamp(1.32rem, 7vw, 2.4rem);
   }
 
-  body.hero-cursor-active,
-  body.hero-cursor-active * {
-    cursor: auto !important;
-  }
-
-  .hero-liquid-cursor {
-    display: none;
-  }
 }
 
 @media (hover: none), (pointer: coarse) {
