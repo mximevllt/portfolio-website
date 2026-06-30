@@ -439,7 +439,7 @@ body.hero-cursor-active * {
   min-height: clamp(82px, 10vw, 132px);
   width: min(100% - 44px, 1280px);
   display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
+  grid-template-columns: 64px minmax(0, 1fr) max-content;
   align-items: center;
   gap: clamp(18px, 4vw, 42px);
   margin: 0 auto;
@@ -486,6 +486,22 @@ body.hero-cursor-active * {
 
 .flowing-menu__item:is(:hover, :focus-visible, .is-active) .project-title em {
   color: rgba(255, 250, 244, 0.72);
+}
+
+.project-note {
+  justify-self: end;
+  color: rgba(56, 43, 43, 0.52);
+  font-size: clamp(0.68rem, 0.95vw, 0.86rem);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.2;
+  text-align: right;
+  white-space: nowrap;
+  transition: color 420ms ease, opacity 420ms ease;
+}
+
+.flowing-menu__item:is(:hover, :focus-visible, .is-active) .project-note {
+  color: rgba(255, 250, 244, 0.6);
 }
 
 .project-badge {
@@ -731,6 +747,15 @@ body.hero-cursor-active * {
     gap: clamp(12px, 4vw, 22px);
   }
 
+  .project-note {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: -8px;
+    font-size: clamp(0.64rem, 2.6vw, 0.76rem);
+    text-align: left;
+    white-space: normal;
+  }
+
   .flowing-menu__item {
     min-height: auto;
   }
@@ -825,6 +850,10 @@ body.hero-cursor-active * {
     color: rgba(56, 43, 43, 0.68);
   }
 
+  .flowing-menu__item:hover .project-note {
+    color: rgba(56, 43, 43, 0.52);
+  }
+
   .flowing-menu__item.has-gallery:hover .project-preview {
     max-height: 0;
     opacity: 0;
@@ -842,6 +871,10 @@ body.hero-cursor-active * {
 
   .flowing-menu__item.is-active .project-title em {
     color: rgba(255, 250, 244, 0.72);
+  }
+
+  .flowing-menu__item.is-active .project-note {
+    color: rgba(255, 250, 244, 0.6);
   }
 
   .flowing-menu__item.has-gallery.is-active .project-preview {

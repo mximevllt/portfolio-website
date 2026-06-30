@@ -51,6 +51,7 @@ const projects = [
     slug: "projet-dionys-hyeres",
     title: "Projet Dionys",
     suffix: "- Hyères",
+    note: "plus d'informations à venir",
     images: [
       { file: "Dionys 01.jpg", orientation: "landscape" },
       { file: "Dionys 02.jpg", orientation: "landscape" }
@@ -60,6 +61,7 @@ const projects = [
     slug: "page-blanche-giens",
     title: "Page Blanche",
     suffix: "- Presqu'île de Giens",
+    note: "plus d'informations à venir",
     images: [
       { file: "Page Blanche 01.jpg", orientation: "landscape" },
       { file: "Page Blanche 02.jpg", orientation: "landscape" }
@@ -69,6 +71,7 @@ const projects = [
     slug: "batiment-s-universite-garde",
     title: "Bâtiment S",
     suffix: "- Université de la Garde",
+    note: "plus d'informations à venir",
     images: [
       { file: "Bâtiment S 01.png", orientation: "landscape" },
       { file: "Bâtiment S 02.png", orientation: "landscape" }
@@ -77,6 +80,7 @@ const projects = [
   {
     slug: "lampe-spotlight",
     title: "Lampe Spotlight",
+    note: "plus d'informations à venir",
     images: [
       { file: "Spotlight 02.jpg", orientation: "portrait" },
       { file: "Spotlight 01.jpg", orientation: "landscape" },
@@ -86,6 +90,7 @@ const projects = [
   {
     slug: "seau-roche-ruinart",
     title: "Seau Roche Ruinart",
+    note: "plus d'informations à venir",
     images: [{ file: "Seaux Ruinart 01.jpg", orientation: "landscape" }]
   }
 ];
@@ -98,6 +103,10 @@ function renderProjectTitle(project) {
   const suffix = project.suffix ? `<em>${project.suffix}</em>` : "";
   const badge = project.badge ? `<span class="project-badge">${project.badge}</span>` : "";
   return `<span class="project-title"><h3>${project.title}</h3>${suffix}${badge}</span>`;
+}
+
+function renderProjectNote(project) {
+  return project.note ? `<span class="project-note">${project.note}</span>` : "";
 }
 
 function renderProjectGallery(project) {
@@ -137,6 +146,7 @@ function renderProjects() {
           <span class="project-link">
             <span class="project-index">${number}</span>
             ${renderProjectTitle(project)}
+            ${renderProjectNote(project)}
           </span>
           ${renderProjectGallery(project)}
         </a>
