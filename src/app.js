@@ -49,6 +49,27 @@ const projects = [
     ]
   },
   {
+    slug: "chateau-gasqui",
+    title: "Château Gasqui",
+    href: "gasqui.html",
+    images: [
+      { file: "Château Gasqui - Abri été.jpg", orientation: "landscape" },
+      { file: "Château Gasqui - Terrasse terre cuite.jpg", orientation: "landscape" },
+      { file: "Château Gasqui - Miroir corten.jpg", orientation: "landscape" }
+    ]
+  },
+  {
+    slug: "clocher-saint-louis",
+    title: "Clocher Saint-Louis",
+    suffix: "- Toulon, Place de l'Equerre",
+    note: "plus d'informations à venir",
+    images: [
+      { file: "Clocher Saint-Louis - Entree.png", orientation: "landscape" },
+      { file: "Clocher Saint-Louis - Chambre.png", orientation: "landscape" },
+      { file: "Clocher Saint-Louis - WC.png", orientation: "portrait" }
+    ]
+  },
+  {
     slug: "projet-dionys-hyeres",
     title: "Projet Dionys",
     suffix: "- Hyères",

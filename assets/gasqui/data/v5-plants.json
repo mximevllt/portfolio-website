@@ -1,0 +1,140 @@
+[
+  {
+    "id": "renoncule", "type": "flowers", "image": "/plants-v5/renoncule.jpg", "latin": "Ranunculus asiaticus", "locations": ["A1"],
+    "fr": { "name": "Renoncule des fleuristes", "flowering": "Mars à mai", "note": "Des fleurs très doubles, aux pétales serrés et soyeux, ouvrent la saison de coupe dans une palette rouge, orange, jaune et crème." },
+    "en": { "name": "Persian buttercup", "flowering": "March to May", "note": "Silky, densely layered flowers open the cutting season in shades of red, orange, yellow and cream." },
+    "de": { "name": "Persische Ranunkel", "flowering": "März bis Mai", "note": "Dicht gefüllte, seidige Blüten eröffnen die Schnittblumensaison in Rot, Orange, Gelb und Creme." }
+  },
+  {
+    "id": "zinnia", "type": "flowers", "image": "/plants-v5/zinnia.jpg", "latin": "Zinnia elegans", "locations": ["A1"],
+    "fr": { "name": "Zinnia multicolore", "flowering": "Juin à octobre", "note": "Une annuelle solaire et très productive, choisie pour ses couleurs franches et sa longue tenue en bouquet." },
+    "en": { "name": "Multicoloured zinnia", "flowering": "June to October", "note": "A sun-loving, highly productive annual selected for its vivid colours and excellent vase life." },
+    "de": { "name": "Mehrfarbige Zinnie", "flowering": "Juni bis Oktober", "note": "Eine sonnenliebende, reich blühende Einjährige mit klaren Farben und sehr guter Haltbarkeit in der Vase." }
+  },
+  {
+    "id": "muflier", "type": "flowers", "image": "/plants-v5/muflier.jpg", "latin": "Antirrhinum majus", "locations": ["A2"],
+    "fr": { "name": "Muflier à longues tiges", "flowering": "Mai à octobre", "note": "Ses hautes hampes structurent les lignes de culture et apportent une verticalité légère aux bouquets." },
+    "en": { "name": "Long-stemmed snapdragon", "flowering": "May to October", "note": "Tall flower spikes structure the cultivated rows and add a light vertical accent to bouquets." },
+    "de": { "name": "Langstieliges Löwenmäulchen", "flowering": "Mai bis Oktober", "note": "Hohe Blütenstände gliedern die Pflanzreihen und geben Sträußen eine leichte Vertikale." }
+  },
+  {
+    "id": "celosie", "type": "flowers", "image": "/plants-v5/celosie.jpg", "latin": "Celosia argentea", "locations": ["A2"],
+    "fr": { "name": "Célosie", "flowering": "Juin à octobre", "note": "Ses inflorescences veloutées et graphiques donnent une matière presque textile aux compositions d’été." },
+    "en": { "name": "Cockscomb", "flowering": "June to October", "note": "Velvety, sculptural flower heads bring an almost textile quality to summer arrangements." },
+    "de": { "name": "Celosie", "flowering": "Juni bis Oktober", "note": "Samtige, grafische Blütenstände verleihen sommerlichen Arrangements eine beinahe textile Wirkung." }
+  },
+  {
+    "id": "bleuet", "type": "flowers", "image": "/plants-v5/bleuet.jpg", "latin": "Centaurea cyanus", "locations": ["B1"],
+    "fr": { "name": "Bleuet", "flowering": "Mai à juillet", "note": "Une fleur champêtre aux nuances de bleu intense, bleu pâle, pourpre et rose, idéale pour alléger les bouquets." },
+    "en": { "name": "Cornflower", "flowering": "May to July", "note": "A meadow flower in deep blue, pale blue, purple and pink, ideal for giving bouquets an airy quality." },
+    "de": { "name": "Kornblume", "flowering": "Mai bis Juli", "note": "Eine leichte Wiesenblume in Tiefblau, Hellblau, Purpur und Rosa, die Sträußen Luftigkeit verleiht." }
+  },
+  {
+    "id": "nigelle", "type": "flowers", "image": "/plants-v5/nigelle.jpg", "latin": "Nigella damascena", "locations": ["B1"],
+    "fr": { "name": "Nigelle de Damas", "flowering": "Mai à juillet", "note": "Son feuillage vaporeux, ses fleurs délicates et ses capsules décoratives prolongent l’intérêt de la plante après floraison." },
+    "en": { "name": "Love-in-a-mist", "flowering": "May to July", "note": "Feathery foliage, delicate flowers and ornamental seed pods extend its interest beyond flowering." },
+    "de": { "name": "Jungfer im Grünen", "flowering": "Mai bis Juli", "note": "Filigranes Laub, zarte Blüten und dekorative Samenkapseln machen sie weit über die Blüte hinaus interessant." }
+  },
+  {
+    "id": "souci", "type": "flowers", "image": "/plants-v5/souci.jpg", "latin": "Calendula officinalis", "locations": ["B2"],
+    "fr": { "name": "Souci", "flowering": "Avril à novembre", "note": "Robuste et généreux, il apporte des tons bronze, abricot et or et peut fleurir très longtemps sous climat doux." },
+    "en": { "name": "Pot marigold", "flowering": "April to November", "note": "Robust and generous, it brings bronze, apricot and gold tones and can flower for a very long season in a mild climate." },
+    "de": { "name": "Ringelblume", "flowering": "April bis November", "note": "Robust und reichblühend bringt sie Bronze-, Aprikosen- und Goldtöne und blüht im milden Klima besonders lange." }
+  },
+  {
+    "id": "statice", "type": "flowers", "image": "/plants-v5/statice.jpg", "latin": "Limonium sinuatum", "locations": ["B2"],
+    "fr": { "name": "Statice", "flowering": "Juin à septembre", "note": "Des nuages de petites fleurs papyracées, fraîches ou séchées, apportent une texture légère et durable." },
+    "en": { "name": "Statice", "flowering": "June to September", "note": "Clouds of small papery flowers, fresh or dried, bring a light and lasting texture." },
+    "de": { "name": "Strandflieder", "flowering": "Juni bis September", "note": "Wolken kleiner papierartiger Blüten schaffen frisch wie getrocknet eine leichte, dauerhafte Textur." }
+  },
+  {
+    "id": "rose", "type": "flowers", "image": "/plants-v5/rose.jpg", "latin": "Rosa spp.", "locations": ["C1"],
+    "fr": { "name": "Rose mauve", "flowering": "Mai à octobre", "note": "Une sélection mauve et violette installe une présence pérenne, parfumée et régulièrement renouvelée au fil de l’été." },
+    "en": { "name": "Mauve rose", "flowering": "May to October", "note": "A mauve and violet selection creates a perennial, scented presence that renews itself through summer." },
+    "de": { "name": "Mauvefarbene Rose", "flowering": "Mai bis Oktober", "note": "Eine Auswahl in Mauve und Violett schafft eine dauerhafte, duftende Präsenz mit wiederkehrender Sommerblüte." }
+  },
+  {
+    "id": "achillee", "type": "flowers", "image": "/plants-v5/achillee.jpg", "latin": "Achillea millefolium", "locations": ["H1", "N2"],
+    "fr": { "name": "Achillée millefeuille", "flowering": "Juin à septembre", "note": "Ses ombelles plates terracotta, saumon et rouge sont sobres en eau, mellifères et excellentes en fleur coupée." },
+    "en": { "name": "Common yarrow", "flowering": "June to September", "note": "Flat terracotta, salmon and red flower heads are drought-tolerant, pollinator-friendly and excellent for cutting." },
+    "de": { "name": "Schafgarbe", "flowering": "Juni bis September", "note": "Flache Blütendolden in Terrakotta, Lachs und Rot sind trockenheitsverträglich, insektenfreundlich und schnittgeeignet." }
+  },
+  {
+    "id": "scabieuse", "type": "flowers", "image": "/plants-v5/scabieuse.jpg", "latin": "Scabiosa spp.", "locations": ["H2", "ZMX"],
+    "fr": { "name": "Scabieuse", "flowering": "Mai à octobre", "note": "Ses fleurs en coussin, portées par des tiges fines, oscillent du vieux rose au prune avec beaucoup de légèreté." },
+    "en": { "name": "Scabious", "flowering": "May to October", "note": "Pincushion flowers on fine stems move from dusty pink to plum with an exceptionally light silhouette." },
+    "de": { "name": "Skabiose", "flowering": "Mai bis Oktober", "note": "Nadelkissenartige Blüten auf feinen Stielen spielen leicht zwischen Altrosa und Pflaume." }
+  },
+  {
+    "id": "oeillet", "type": "flowers", "image": "/plants-v5/oeillet.jpg", "latin": "Dianthus spp.", "locations": ["H2", "ZMX"],
+    "fr": { "name": "Œillet Dianthus", "flowering": "Mai à septembre", "note": "Une fleur parfumée et graphique, déclinée en rose, crème, mauve et bicolore pour enrichir les bouquets." },
+    "en": { "name": "Dianthus pink", "flowering": "May to September", "note": "A fragrant, graphic flower in pink, cream, mauve and bicolour shades, selected to enrich bouquets." },
+    "de": { "name": "Nelke", "flowering": "Mai bis September", "note": "Eine duftende, grafische Blüte in Rosa, Creme, Mauve und zweifarbigen Tönen für abwechslungsreiche Sträuße." }
+  },
+  {
+    "id": "immortelle", "type": "flowers", "image": "/plants-v5/immortelle.jpg", "latin": "Xerochrysum bracteatum", "locations": ["H3"],
+    "fr": { "name": "Immortelle à bractées", "flowering": "Juillet à octobre", "note": "Ses bractées sèches et lumineuses conservent leur couleur, du jaune au saumon et au rouge, bien après la coupe." },
+    "en": { "name": "Strawflower", "flowering": "July to October", "note": "Crisp, luminous bracts retain their colour, from yellow to salmon and red, long after cutting." },
+    "de": { "name": "Strohblume", "flowering": "Juli bis Oktober", "note": "Trockene, leuchtende Hüllblätter bewahren ihre Farben von Gelb über Lachs bis Rot lange nach dem Schnitt." }
+  },
+  {
+    "id": "gaillarde", "type": "flowers", "image": "/plants-v5/gaillarde.jpg", "latin": "Gaillardia spp.", "locations": ["H3", "ZMX"],
+    "fr": { "name": "Gaillarde", "flowering": "Juin à octobre", "note": "Une marguerite solaire jaune et orange, résistante à la chaleur, qui soutient les floraisons jusqu’à l’automne." },
+    "en": { "name": "Blanket flower", "flowering": "June to October", "note": "A sun-bright yellow and orange daisy, heat-tolerant and flowering steadily into autumn." },
+    "de": { "name": "Kokardenblume", "flowering": "Juni bis Oktober", "note": "Eine sonnenhafte gelb-orange Blüte, hitzeverträglich und ausdauernd bis in den Herbst." }
+  },
+  {
+    "id": "gomphrena", "type": "flowers", "image": "/plants-v5/gomphrena.jpg", "latin": "Gomphrena globosa", "locations": ["H4"],
+    "fr": { "name": "Gomphrena", "flowering": "Juillet à octobre", "note": "Des pompons compacts et papyracés, du rouge au violet, restent nets au jardin comme en bouquet sec." },
+    "en": { "name": "Globe amaranth", "flowering": "July to October", "note": "Compact papery globes, from red to violet, remain crisp in the garden and in dried bouquets." },
+    "de": { "name": "Kugelamarant", "flowering": "Juli bis Oktober", "note": "Kompakte papierartige Kugeln von Rot bis Violett bleiben im Beet wie im Trockenstrauß prägnant." }
+  },
+  {
+    "id": "cosmos", "type": "flowers", "image": "/plants-v5/cosmos.jpg", "latin": "Cosmos bipinnatus", "locations": ["D1"],
+    "fr": { "name": "Cosmos bipinnatus", "flowering": "Juin à octobre", "note": "Son feuillage fin et ses corolles carmin donnent du mouvement aux lignes, jusque dans les premières fraîcheurs." },
+    "en": { "name": "Garden cosmos", "flowering": "June to October", "note": "Fine foliage and carmine flowers bring movement to the rows through to the first cool weather." },
+    "de": { "name": "Schmuckkörbchen", "flowering": "Juni bis Oktober", "note": "Feines Laub und karminrote Blüten bringen bis zu den ersten kühlen Tagen Bewegung in die Reihen." }
+  },
+  {
+    "id": "tournesol", "type": "flowers", "image": "/plants-v5/tournesol.jpg", "latin": "Helianthus annuus", "locations": ["D2"],
+    "fr": { "name": "Tournesol", "flowering": "Juillet à septembre", "note": "Une grande fleur repère, très lisible dans le paysage, qui apporte hauteur, lumière et nourriture aux pollinisateurs." },
+    "en": { "name": "Sunflower", "flowering": "July to September", "note": "A tall landmark flower, highly legible in the landscape, bringing height, light and food for pollinators." },
+    "de": { "name": "Sonnenblume", "flowering": "Juli bis September", "note": "Eine weithin sichtbare Leitpflanze, die Höhe, Licht und Nahrung für Bestäuber in die Landschaft bringt." }
+  },
+  {
+    "id": "lisianthus", "type": "flowers", "image": "/plants-v5/lisianthus.jpg", "latin": "Eustoma grandiflorum", "locations": ["E1"],
+    "fr": { "name": "Lisianthus", "flowering": "Juin à septembre", "note": "Ses fleurs élégantes, proches d’une rose légère, apportent une tonalité mauve et violette raffinée aux bouquets." },
+    "en": { "name": "Lisianthus", "flowering": "June to September", "note": "Elegant, rose-like flowers bring refined mauve and violet tones to bouquets." },
+    "de": { "name": "Prärieenzian", "flowering": "Juni bis September", "note": "Elegante, rosenähnliche Blüten bringen feine Mauve- und Violetttöne in die Sträuße." }
+  },
+  {
+    "id": "dahlia", "type": "flowers", "image": "/plants-v5/dahlia.jpg", "latin": "Dahlia spp.", "locations": ["E2"],
+    "fr": { "name": "Dahlia", "flowering": "Juillet à novembre", "note": "Une floraison spectaculaire et très diversifiée, précieuse pour prolonger les récoltes jusqu’aux premières gelées." },
+    "en": { "name": "Dahlia", "flowering": "July to November", "note": "A spectacular and highly varied flower, invaluable for extending the harvest to the first frosts." },
+    "de": { "name": "Dahlie", "flowering": "Juli bis November", "note": "Eine spektakuläre, vielfältige Blüte, die die Ernte bis zu den ersten Frösten verlängert." }
+  },
+  {
+    "id": "micocoulier", "type": "trees", "image": "/plants-v5/micocoulier.jpg", "latin": "Celtis australis", "locations": ["B1"],
+    "fr": { "name": "Micocoulier", "flowering": "Avril à mai", "note": "Un grand arbre méditerranéen à couronne ample, choisi pour son ombre, sa résistance à la chaleur et son port durable." },
+    "en": { "name": "Mediterranean hackberry", "flowering": "April to May", "note": "A broad-crowned Mediterranean tree selected for its shade, heat tolerance and lasting structure." },
+    "de": { "name": "Europäischer Zürgelbaum", "flowering": "April bis Mai", "note": "Ein breitkroniger mediterraner Baum, gewählt für Schatten, Hitzetoleranz und dauerhafte Struktur." }
+  },
+  {
+    "id": "arbre-pompoms", "type": "trees", "image": "/plants-v5/arbre-pompoms.jpg", "latin": "Dais cotinifolia", "locations": ["B2"],
+    "fr": { "name": "Arbre à pompons", "flowering": "Juin à juillet", "note": "Ses inflorescences roses et sphériques transforment la couronne en nuage coloré au début de l’été." },
+    "en": { "name": "Pompom tree", "flowering": "June to July", "note": "Round pink flower heads turn the crown into a coloured cloud at the beginning of summer." },
+    "de": { "name": "Pomponbaum", "flowering": "Juni bis Juli", "note": "Runde rosa Blütenstände verwandeln die Krone zu Sommerbeginn in eine farbige Wolke." }
+  },
+  {
+    "id": "bougainvillier", "type": "trees", "image": "/plants-v5/bougainvillier.jpg", "latin": "Bougainvillea spp.", "locations": ["F1"],
+    "fr": { "name": "Bougainvillier", "flowering": "Juin à octobre", "note": "Une présence rose éclatante pour un point chaud et abrité, conduite comme un sujet sculptural au sein du jardin." },
+    "en": { "name": "Bougainvillea", "flowering": "June to October", "note": "A vivid pink presence for a warm, sheltered position, trained as a sculptural specimen within the garden." },
+    "de": { "name": "Bougainvillea", "flowering": "Juni bis Oktober", "note": "Eine leuchtend rosa Präsenz für einen warmen, geschützten Standort, als skulpturales Gartenelement erzogen." }
+  },
+  {
+    "id": "grenadier", "type": "trees", "image": "/plants-v5/grenadier.jpg", "latin": "Punica granatum", "locations": ["F2"],
+    "fr": { "name": "Grenadier", "flowering": "Mai à juillet", "note": "Ses fleurs rouge orangé puis ses fruits relient l’ornement, la saison et l’usage comestible dans un même sujet." },
+    "en": { "name": "Pomegranate", "flowering": "May to July", "note": "Orange-red flowers followed by fruit unite ornament, seasonality and edible use in one specimen." },
+    "de": { "name": "Granatapfelbaum", "flowering": "Mai bis Juli", "note": "Orangerote Blüten und spätere Früchte verbinden Zierwert, Jahreszeit und essbare Nutzung in einem Baum." }
+  }
+]
