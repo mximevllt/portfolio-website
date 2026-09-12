@@ -14,8 +14,11 @@ export default async function handler(request, response) {
   try {
     const url = new URL(request.url || "/api/admin-visits", "https://portfolio.local");
     const limit = Math.min(Math.max(Number(url.searchParams.get("limit")) || 250, 1), 500);
+    const ipHash = url.searchParams.get("ipHash") || "";
+    const eventLimit = Math.min(Math.max(Number(url.searchParams.get("eventLimit")) || (ipHash ? 1000 : 50), 1), 1000);
     const visitors = await supabaseRequest(`portfolio_visitors?select=*&order=last_seen.desc&limit=${limit}`);
-    const events = await supabaseRequest("portfolio_visit_events?select=*&order=visited_at.desc&limit=50");
+    const eventFilter = ipHash ? `&ip_hash=eq.${encodeURIComponent(ipHash)}` : "";
+    const events = await supabaseRequest(`portfolio_visit_events?select=*&order=visited_at.desc${eventFilter}&limit=${eventLimit}`);
     const totalVisits = Array.isArray(visitors)
       ? visitors.reduce((total, visitor) => total + Number(visitor.visit_count || 0), 0)
       : 0;
