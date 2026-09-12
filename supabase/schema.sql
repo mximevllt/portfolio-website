@@ -39,6 +39,9 @@ create table if not exists public.portfolio_visit_events (
   timezone text,
   screen_size text,
   user_agent text,
+  event_type text not null default 'view',
+  page_session_id text,
+  duration_seconds integer,
   visited_at timestamptz not null default now()
 );
 
@@ -46,6 +49,12 @@ create index if not exists portfolio_visitors_last_seen_idx on public.portfolio_
 create index if not exists portfolio_visitors_country_idx on public.portfolio_visitors (country);
 create index if not exists portfolio_visit_events_visited_at_idx on public.portfolio_visit_events (visited_at desc);
 create index if not exists portfolio_visit_events_ip_hash_idx on public.portfolio_visit_events (ip_hash);
+create index if not exists portfolio_visit_events_session_idx on public.portfolio_visit_events (page_session_id);
+
+alter table public.portfolio_visit_events
+  add column if not exists event_type text not null default 'view',
+  add column if not exists page_session_id text,
+  add column if not exists duration_seconds integer;
 
 alter table public.portfolio_visitors enable row level security;
 alter table public.portfolio_visit_events enable row level security;

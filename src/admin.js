@@ -12,6 +12,8 @@ const updatedAtNode = document.querySelector("[data-updated-at]");
 
 const tokenKey = "portfolio-admin-token";
 let refreshTimer = 0;
+let latestVisitsExpanded = false;
+let journeysByIp = new Map();
 
 function getToken() {
   return sessionStorage.getItem(tokenKey) || "";
@@ -44,6 +46,43 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+function formatDuration(seconds) {
+  const value = Number(seconds);
+  if (!Number.isFinite(value) || value < 0) return "Durée non mesurée";
+  const minutes = Math.floor(value / 60);
+  const remaining = Math.round(value % 60);
+  return minutes ? `${minutes} min ${String(remaining).padStart(2, "0")} s` : `${remaining} s`;
+}
+
+function renderJourney(ipHash) {
+  const events = (journeysByIp.get(ipHash) || []).sort((a, b) => new Date(a.visited_at) - new Date(b.visited_at));
+  const leaves = new Map(events.filter((event) => event.event_type === "leave" && event.page_session_id).map((event) => [event.page_session_id, event]));
+  const pages = events.filter((event) => event.event_type !== "leave");
+  if (!pages.length) return "<span>Pas encore de parcours enregistré</span>";
+  return `<ol class="admin-journey">${pages.map((event) => {
+    const leave = event.page_session_id ? leaves.get(event.page_session_id) : null;
+    return `<li><span>${clean(event.page_path)}</span><small>${formatDate(event.visited_at)} · ${formatDuration(leave?.duration_seconds)}</small></li>`;
+  }).join("")}</ol>`;
+}
+
+async function toggleLatestVisits(data) {
+  latestVisitsExpanded = !latestVisitsExpanded;
+  if (latestVisitsExpanded) {
+    setStatus("Chargement des parcours…", "neutral");
+    const uniqueIps = [...new Set((data.latestEvents || []).map((event) => event.ip_hash).filter(Boolean))];
+    const token = getToken();
+    const responses = await Promise.all(uniqueIps.map(async (ipHash) => {
+      const response = await fetch(`/api/admin-visits?ipHash=${encodeURIComponent(ipHash)}&eventLimit=1000`, { headers: { Authorization: `Bearer ${token}` } });
+      if (!response.ok) throw new Error("Impossible de charger les parcours.");
+      const journeyData = await response.json();
+      return [ipHash, journeyData.latestEvents || []];
+    }));
+    journeysByIp = new Map(responses);
+  }
+  renderRows(data);
+  setStatus(latestVisitsExpanded ? "Parcours affichés. Les durées sont mesurées pour les nouvelles visites." : "Tableau à jour.", "success");
+}
+
 function renderRows(data) {
   totalVisitorsNode.textContent = String(data.totalVisitors || 0);
   totalVisitsNode.textContent = String(data.totalVisits || 0);
@@ -66,19 +105,27 @@ function renderRows(data) {
     })
     .join("");
 
-  eventsBody.innerHTML = (data.latestEvents || [])
-    .map(
-      (event) => `
+  const eventsTable = eventsBody.closest("table");
+  const pageHeading = eventsTable.querySelector("thead th:last-child");
+  pageHeading.innerHTML = `<button type="button" class="admin-journey-toggle" data-admin-latest-toggle>${latestVisitsExpanded ? "Pages visitées" : "Page"}</button>`;
+  const eventRows = latestVisitsExpanded
+    ? [...new Map((data.latestEvents || []).map((event) => [event.ip_hash, event])).values()]
+    : (data.latestEvents || []);
+  eventsBody.innerHTML = eventRows
+    .map((event) => `
         <tr>
           <td>${formatDate(event.visited_at)}</td>
           <td>${clean(event.location_label)}</td>
           <td>${escapeHtml(event.ip_address || event.ip_masked || "-")}</td>
           <td>${clean(event.device_type)}</td>
-          <td>${clean(event.page_path)}</td>
+          <td class="admin-journey-cell">${latestVisitsExpanded ? renderJourney(event.ip_hash) : clean(event.page_path)}</td>
         </tr>
       `
     )
     .join("");
+  eventsTable.querySelector("[data-admin-latest-toggle]")?.addEventListener("click", () => {
+    toggleLatestVisits(data).catch(() => setStatus("Impossible de charger les parcours.", "error"));
+  });
 }
 
 async function loadDashboard() {
@@ -106,6 +153,8 @@ async function loadDashboard() {
   }
 
   const data = await response.json();
+  latestVisitsExpanded = false;
+  journeysByIp = new Map();
   loginForm.hidden = true;
   dashboard.hidden = false;
   renderRows(data);

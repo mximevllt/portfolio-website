@@ -5,6 +5,12 @@
     return;
   }
 
+  const pageSessionId = window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`;
+  const startedAt = Date.now();
+  let visibleSince = document.visibilityState === "visible" ? startedAt : null;
+  let visibleDurationMs = 0;
+  let leaveSent = false;
+
   const payload = {
     pagePath: `${window.location.pathname}${window.location.search}${window.location.hash}`,
     pageTitle: document.title,
@@ -14,18 +20,42 @@
     screenSize: `${window.screen.width}x${window.screen.height}`
   };
 
-  const body = JSON.stringify(payload);
-
-  if (navigator.sendBeacon) {
+  function send(payloadToSend) {
+    const body = JSON.stringify(payloadToSend);
+    if (navigator.sendBeacon) {
     const blob = new Blob([body], { type: "application/json" });
-    navigator.sendBeacon(endpoint, blob);
-    return;
+      navigator.sendBeacon(endpoint, blob);
+      return;
+    }
+
+    fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
+      keepalive: true
+    }).catch(() => {});
   }
 
-  fetch(endpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body,
-    keepalive: true
-  }).catch(() => {});
+  send({ ...payload, eventType: "view", pageSessionId });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden" && visibleSince) {
+      visibleDurationMs += Date.now() - visibleSince;
+      visibleSince = null;
+    } else if (document.visibilityState === "visible" && !visibleSince) {
+      visibleSince = Date.now();
+    }
+  });
+
+  window.addEventListener("pagehide", () => {
+    if (leaveSent) return;
+    leaveSent = true;
+    if (visibleSince) visibleDurationMs += Date.now() - visibleSince;
+    send({
+      ...payload,
+      eventType: "leave",
+      pageSessionId,
+      durationSeconds: Math.max(0, Math.round(visibleDurationMs / 1000))
+    });
+  });
 })();

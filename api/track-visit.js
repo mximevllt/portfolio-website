@@ -46,8 +46,15 @@ export default async function handler(request, response) {
     const language = cleanString(body.language, 80);
     const timezone = cleanString(body.timezone, 120);
     const screenSize = cleanString(body.screenSize, 80);
+    const eventType = body.eventType === "leave" ? "leave" : "view";
+    const pageSessionId = cleanString(body.pageSessionId, 120) || null;
+    const durationSeconds = Number.isFinite(Number(body.durationSeconds))
+      ? Math.min(Math.max(Math.round(Number(body.durationSeconds)), 0), 86400)
+      : null;
 
-    const existingRows = await supabaseRequest(`portfolio_visitors?ip_hash=eq.${encodeURIComponent(ipHash)}&select=id,visit_count`);
+    const existingRows = eventType === "view"
+      ? await supabaseRequest(`portfolio_visitors?ip_hash=eq.${encodeURIComponent(ipHash)}&select=id,visit_count`)
+      : [];
     const existing = Array.isArray(existingRows) ? existingRows[0] : null;
     const visitorPayload = {
       ip_hash: ipHash,
@@ -69,7 +76,7 @@ export default async function handler(request, response) {
       last_seen: now
     };
 
-    if (existing?.id) {
+    if (eventType === "view" && existing?.id) {
       await supabaseRequest(`portfolio_visitors?id=eq.${existing.id}`, {
         method: "PATCH",
         headers: { Prefer: "return=minimal" },
@@ -78,7 +85,7 @@ export default async function handler(request, response) {
           visit_count: Number(existing.visit_count || 0) + 1
         })
       });
-    } else {
+    } else if (eventType === "view") {
       await supabaseRequest("portfolio_visitors", {
         method: "POST",
         headers: { Prefer: "return=minimal" },
@@ -110,6 +117,9 @@ export default async function handler(request, response) {
         timezone: timezone || null,
         screen_size: screenSize || null,
         user_agent: userAgent,
+        event_type: eventType,
+        page_session_id: pageSessionId,
+        duration_seconds: durationSeconds,
         visited_at: now
       })
     });
