@@ -15,6 +15,10 @@
   padding-top: var(--nav-height);
 }
 
+.batiment-s-page .site-header {
+  background: var(--bs-black);
+}
+
 .batiment-s-page h1,
 .batiment-s-page h2,
 .batiment-s-page h3,
@@ -162,6 +166,7 @@
   display: block;
   filter: grayscale(1);
   object-fit: cover;
+  transition: filter 320ms ease;
 }
 
 .bs-existing__images figure:nth-child(2) img {
@@ -210,7 +215,7 @@
   aspect-ratio: 2970 / 1392;
   overflow: hidden;
   cursor: crosshair;
-  background: #000;
+  background: #fff;
   outline: none;
 }
 
@@ -228,11 +233,16 @@
   object-fit: fill;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 220ms ease;
+  transition: opacity 180ms ease;
 }
 
 .bs-zoning-stage__image.is-active {
   opacity: 1;
+}
+
+.bs-zoning-stage__image[data-zone-view="travail"] {
+  object-fit: contain;
+  object-position: left top;
 }
 
 .bs-zone-copy {
@@ -340,6 +350,16 @@
   font-weight: 500;
 }
 
+@media (min-width: 761px) {
+  .bs-existing__images figure:hover img {
+    filter: grayscale(0);
+  }
+
+  .bs-zoning-mobile-cards {
+    display: none;
+  }
+}
+
 @media (max-width: 900px) {
   .bs-hero,
   .bs-existing,
@@ -429,5 +449,74 @@
 
   .bs-zoning-layout {
     gap: 20px;
+  }
+}
+
+@media (max-width: 760px) {
+  .bs-zoning__hint,
+  .bs-zone-copy {
+    display: none;
+  }
+
+  .bs-zoning-layout {
+    display: block;
+  }
+
+  .bs-zoning-visual {
+    position: relative;
+  }
+
+  .bs-zoning-stage {
+    position: sticky;
+    z-index: 4;
+    top: calc(var(--nav-height) + 12px);
+    cursor: default;
+  }
+
+  .bs-zoning-mobile-cards {
+    position: relative;
+    z-index: 3;
+    padding-top: calc((100vw - 36px) * 0.469 + 26px);
+  }
+
+  .bs-zone-card {
+    min-height: 76svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-left: 0;
+    padding: clamp(42px, 8vw, 64px) 0 clamp(38px, 9vw, 84px);
+    background: #fff;
+    border-bottom: 2px solid var(--bs-orange);
+  }
+
+  .bs-zone-card .bs-eyebrow {
+    margin-bottom: 12px;
+  }
+
+  .bs-zone-card h3 {
+    max-width: 480px;
+    margin: 0 0 18px;
+    font-size: clamp(2rem, 9vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    line-height: 0.92;
+  }
+
+  .bs-zone-card > p:last-child {
+    max-width: 430px;
+    margin: 0;
+    color: var(--bs-soft);
+    font-size: 0.94rem;
+    font-weight: 400;
+    line-height: 1.55;
+  }
+
+  .bs-existing__images img {
+    transition: filter 600ms ease;
+  }
+
+  .bs-existing.is-revealed .bs-existing__images img {
+    filter: grayscale(0);
   }
 }

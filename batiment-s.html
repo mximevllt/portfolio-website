@@ -12,7 +12,7 @@
     <script type="module" src="/src/batiment-s.js"></script>
   </head>
   <body class="project-detail-page batiment-s-page">
-    <header class="site-header project-header" data-animate>
+    <header class="site-header project-header">
       <button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="siteMenu">
         <span></span>
         <span></span>
@@ -76,23 +76,58 @@
         </div>
       </section>
 
-      <section class="bs-zoning bs-frame" data-animate aria-labelledby="bs-zoning-title">
+      <section class="bs-zoning bs-frame" aria-labelledby="bs-zoning-title">
         <div class="bs-zoning__heading">
           <p class="bs-eyebrow">Organisation spatiale</p>
           <h2 id="bs-zoning-title">Explorer les espaces du projet.</h2>
-          <p>Déplacez le pointeur sur le bâtiment pour ouvrir les différents pôles programmatiques.</p>
+          <p class="bs-zoning__hint">Déplacez le pointeur sur le bâtiment pour ouvrir les différents pôles programmatiques.</p>
         </div>
 
         <div class="bs-zoning-layout">
-          <div class="bs-zoning-stage" data-zoning-stage tabindex="0" aria-label="Isométrie interactive des espaces du Bâtiment S">
-            <img class="bs-zoning-stage__image is-active" data-zone-view="general" src="/assets/batiment-s/zoning-general.png" alt="Vue générale extérieure fermée du Bâtiment S." />
-            <img class="bs-zoning-stage__image" data-zone-view="vide" src="/assets/batiment-s/zoning-vide.png" alt="" aria-hidden="true" />
-            <img class="bs-zoning-stage__image" data-zone-view="rangements" data-zone-mask="rangements" src="/assets/batiment-s/zoning-rangements.png" alt="" aria-hidden="true" />
-            <img class="bs-zoning-stage__image" data-zone-view="art" data-zone-mask="art" src="/assets/batiment-s/zoning-art.png" alt="" aria-hidden="true" />
-            <img class="bs-zoning-stage__image" data-zone-view="vie" data-zone-mask="vie" src="/assets/batiment-s/zoning-vie.png" alt="" aria-hidden="true" />
-            <img class="bs-zoning-stage__image" data-zone-view="sport" data-zone-mask="sport" src="/assets/batiment-s/zoning-sport.png" alt="" aria-hidden="true" />
-            <img class="bs-zoning-stage__image" data-zone-view="travail" data-zone-mask="travail" src="/assets/batiment-s/zoning-travail.png" alt="" aria-hidden="true" />
-            <img class="bs-zoning-stage__image" data-zone-view="passerelle" data-zone-mask="passerelle" src="/assets/batiment-s/zoning-passerelle.png" alt="" aria-hidden="true" />
+          <div class="bs-zoning-visual">
+            <div class="bs-zoning-stage" data-zoning-stage tabindex="0" aria-label="Isométrie interactive des espaces du Bâtiment S">
+              <img class="bs-zoning-stage__image is-active" data-zone-view="general" src="/assets/batiment-s/zoning-general.png" alt="Vue générale extérieure fermée du Bâtiment S." />
+              <img class="bs-zoning-stage__image" data-zone-view="vide" src="/assets/batiment-s/zoning-vide.png" alt="" aria-hidden="true" />
+              <img class="bs-zoning-stage__image" data-zone-view="rangements" data-zone-mask="rangements" src="/assets/batiment-s/zoning-rangements.png" alt="" aria-hidden="true" />
+              <img class="bs-zoning-stage__image" data-zone-view="art" data-zone-mask="art" src="/assets/batiment-s/zoning-art.png" alt="" aria-hidden="true" />
+              <img class="bs-zoning-stage__image" data-zone-view="vie" data-zone-mask="vie" src="/assets/batiment-s/zoning-vie.png" alt="" aria-hidden="true" />
+              <img class="bs-zoning-stage__image" data-zone-view="sport" data-zone-mask="sport" src="/assets/batiment-s/zoning-sport.png" alt="" aria-hidden="true" />
+              <img class="bs-zoning-stage__image" data-zone-view="travail" data-zone-mask="travail" src="/assets/batiment-s/zoning-travail.png" alt="" aria-hidden="true" />
+              <img class="bs-zoning-stage__image" data-zone-view="passerelle" data-zone-mask="passerelle" src="/assets/batiment-s/zoning-passerelle.png" alt="" aria-hidden="true" />
+            </div>
+
+            <div class="bs-zoning-mobile-cards" data-zoning-mobile aria-label="Description des espaces du projet">
+              <article class="bs-zone-card" data-zone-scroll="vie">
+                <p class="bs-eyebrow">Pôle collectif</p>
+                <h3>Espace de vie</h3>
+                <p>Le grand hall devient un espace de détente et de convivialité. La double hauteur et la lumière naturelle font de ce volume le point de rencontre immédiat du bâtiment.</p>
+              </article>
+              <article class="bs-zone-card" data-zone-scroll="passerelle">
+                <p class="bs-eyebrow">Intervention centrale</p>
+                <h3>Passerelle multidirectrice</h3>
+                <p>La passerelle relie les niveaux et plusieurs pôles du projet. Elle transforme la circulation en un lieu à part entière, utilisable pour se déplacer, faire une pause, déjeuner ou observer le hall.</p>
+              </article>
+              <article class="bs-zone-card" data-zone-scroll="travail">
+                <p class="bs-eyebrow">Pôle calme</p>
+                <h3>Espace de travail</h3>
+                <p>Une nouvelle plateforme et un R+2 utilisent des volumes auparavant inexploités. Le R+1 accueille une zone calme et insonorisée, tandis que les niveaux hauts bénéficient des vues et de la lumière des façades.</p>
+              </article>
+              <article class="bs-zone-card" data-zone-scroll="rangements">
+                <p class="bs-eyebrow">Entrée Sud</p>
+                <h3>Entrée & rangements</h3>
+                <p>Des casiers et rangements sont installés à l’entrée Sud pour permettre aux étudiants de rester dans le bâtiment et d’y concentrer leurs activités sans multiplier les détours.</p>
+              </article>
+              <article class="bs-zone-card" data-zone-scroll="sport">
+                <p class="bs-eyebrow">Aile Nord</p>
+                <h3>Espace sportif</h3>
+                <p>La salle de sport existante est agrandie et reconnectée à la vie générale du bâtiment. Elle devient un pôle visible et facilement accessible depuis le cœur du campus.</p>
+              </article>
+              <article class="bs-zone-card" data-zone-scroll="art">
+                <p class="bs-eyebrow">Aile Nord</p>
+                <h3>Espace arts</h3>
+                <p>L’espace dédié à l’art et à la musique rassemble les activités de création dans l’aile Nord, au contact direct des autres usages étudiants.</p>
+              </article>
+            </div>
           </div>
 
           <aside class="bs-zone-copy" data-zone-copy aria-live="polite">

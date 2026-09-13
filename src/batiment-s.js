@@ -10,6 +10,10 @@ if (stage) {
   );
   const masks = new Map();
   const maskOrder = ["passerelle", "travail", "rangements", "sport", "art", "vie"];
+  const mobileQuery = window.matchMedia("(max-width: 760px)");
+  const mobileCards = [...document.querySelectorAll("[data-zone-scroll]")];
+  const existingSection = document.querySelector(".bs-existing");
+  const existingKicker = existingSection?.querySelector(".bs-eyebrow");
   const zoneContent = {
     general: {
       label: "Vue générale",
@@ -56,6 +60,7 @@ if (stage) {
   let activeZone = "general";
   let framePending = false;
   let latestPoint = null;
+  let mobileObserver;
 
   const isOrange = (red, green, blue, alpha) =>
     alpha > 30 && red > 155 && green > 20 && green < 180 && blue < 125 && red - green > 52;
@@ -116,7 +121,16 @@ if (stage) {
 
   const zoneAt = (x, y) => {
     for (const zone of maskOrder) {
-      if (matchesMask(masks.get(zone), x, y)) return zone;
+      let maskX = x;
+      if (zone === "travail") {
+        const workView = views.get("travail");
+        const stageRatio = stage.clientWidth / stage.clientHeight;
+        const workRatio = workView.naturalWidth / workView.naturalHeight;
+        const visibleWidth = workRatio / stageRatio;
+        if (maskX > visibleWidth) continue;
+        maskX /= visibleWidth;
+      }
+      if (matchesMask(masks.get(zone), maskX, y)) return zone;
     }
     return "vide";
   };
@@ -143,7 +157,7 @@ if (stage) {
 
   const updateFromPointer = () => {
     framePending = false;
-    if (!latestPoint) return;
+    if (!latestPoint || mobileQuery.matches) return;
 
     const bounds = stage.getBoundingClientRect();
     const x = (latestPoint.clientX - bounds.left) / bounds.width;
@@ -157,6 +171,7 @@ if (stage) {
   };
 
   stage.addEventListener("pointermove", (event) => {
+    if (mobileQuery.matches) return;
     latestPoint = event;
     if (framePending) return;
     framePending = true;
@@ -164,12 +179,57 @@ if (stage) {
   });
 
   stage.addEventListener("pointerleave", () => {
+    if (mobileQuery.matches) return;
     latestPoint = null;
     showZone("general");
   });
 
-  stage.addEventListener("focus", () => showZone("vide"));
-  stage.addEventListener("blur", () => showZone("general"));
+  stage.addEventListener("focus", () => {
+    if (!mobileQuery.matches) showZone("vide");
+  });
+  stage.addEventListener("blur", () => {
+    if (!mobileQuery.matches) showZone("general");
+  });
+
+  const updateExistingImages = () => {
+    if (!existingSection || !existingKicker) return;
+    if (!mobileQuery.matches) {
+      existingSection.classList.remove("is-revealed");
+      return;
+    }
+
+    const headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--nav-height")) || 0;
+    existingSection.classList.toggle("is-revealed", existingKicker.getBoundingClientRect().top <= headerHeight + 30);
+  };
+
+  const setupMobileZoning = () => {
+    mobileObserver?.disconnect();
+    stage.tabIndex = mobileQuery.matches ? -1 : 0;
+
+    if (!mobileQuery.matches) {
+      showZone("general");
+      updateExistingImages();
+      return;
+    }
+
+    mobileObserver = new IntersectionObserver(
+      (entries) => {
+        const visibleCard = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
+        if (visibleCard) showZone(visibleCard.target.dataset.zoneScroll);
+      },
+      { rootMargin: "-34% 0px -42% 0px", threshold: [0.15, 0.4, 0.7] }
+    );
+
+    mobileCards.forEach((card) => mobileObserver.observe(card));
+    updateExistingImages();
+  };
+
+  mobileQuery.addEventListener("change", setupMobileZoning);
+  window.addEventListener("scroll", updateExistingImages, { passive: true });
+  window.addEventListener("resize", updateExistingImages);
 
   initializeMasks();
+  setupMobileZoning();
 }
