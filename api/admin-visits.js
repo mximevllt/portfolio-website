@@ -1,5 +1,19 @@
 import { isAuthorized, sendJson, supabaseRequest } from "../server/tracking-utils.js";
 
+async function getAllEvents(path) {
+  const batchSize = 1000;
+  const events = [];
+  let offset = 0;
+
+  while (true) {
+    const batch = await supabaseRequest(`${path}&limit=${batchSize}&offset=${offset}`);
+    const rows = Array.isArray(batch) ? batch : [];
+    events.push(...rows);
+    if (rows.length < batchSize) return events;
+    offset += rows.length;
+  }
+}
+
 export default async function handler(request, response) {
   if (request.method !== "GET") {
     sendJson(response, 405, { error: "Method not allowed" });
@@ -16,14 +30,19 @@ export default async function handler(request, response) {
     const limit = Math.min(Math.max(Number(url.searchParams.get("limit")) || 250, 1), 500);
     const ipHash = url.searchParams.get("ipHash") || "";
     const includeJourneys = url.searchParams.get("includeJourneys") === "true";
-    const eventLimit = Math.min(Math.max(Number(url.searchParams.get("eventLimit")) || (ipHash ? 1000 : 50), 1), 1000);
+    const allEvents = url.searchParams.get("allEvents") === "true";
+    const defaultEventLimit = ipHash || includeJourneys || allEvents ? 1000 : 50;
+    const eventLimit = Math.min(Math.max(Number(url.searchParams.get("eventLimit")) || defaultEventLimit, 1), 1000);
     const visitors = await supabaseRequest(`portfolio_visitors?select=*&order=last_seen.desc&limit=${limit}`);
     const eventFilter = ipHash
       ? `&ip_hash=eq.${encodeURIComponent(ipHash)}`
       : includeJourneys
         ? ""
         : "&event_type=neq.leave";
-    const events = await supabaseRequest(`portfolio_visit_events?select=*&order=visited_at.desc${eventFilter}&limit=${eventLimit}`);
+    const eventsPath = `portfolio_visit_events?select=*&order=visited_at.desc${eventFilter}`;
+    const events = allEvents
+      ? await getAllEvents(eventsPath)
+      : await supabaseRequest(`${eventsPath}&limit=${eventLimit}`);
     const totalVisits = Array.isArray(visitors)
       ? visitors.reduce((total, visitor) => total + Number(visitor.visit_count || 0), 0)
       : 0;

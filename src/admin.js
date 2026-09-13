@@ -91,7 +91,7 @@ async function loadJourneys(data, showStatus = true) {
   renderRows(data);
 
   try {
-    const response = await fetch("/api/admin-visits?includeJourneys=true&eventLimit=1000", {
+    const response = await fetch("/api/admin-visits?includeJourneys=true&allEvents=true", {
       headers: { Authorization: `Bearer ${token}` }
     });
     if (!response.ok) throw new Error("Impossible de charger les parcours.");
@@ -183,7 +183,7 @@ async function loadDashboard() {
 
   setStatus("Actualisation des visites...", "neutral");
 
-  const response = await fetch("/api/admin-visits", {
+  const response = await fetch("/api/admin-visits?allEvents=true", {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -210,7 +210,7 @@ async function loadDashboard() {
   if (latestVisitsExpanded) {
     await loadJourneys(data, false);
   } else {
-    setStatus("Tableau à jour.", "success");
+    setStatus(`${data.latestEvents.length} visites affichées.`, "success");
   }
 }
 
