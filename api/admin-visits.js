@@ -1,4 +1,8 @@
-import { isAuthorized, sendJson, supabaseRequest } from "../server/tracking-utils.js";
+import { isAuthorized, isExcludedTrackingSource, sendJson, supabaseRequest } from "../server/tracking-utils.js";
+
+function isVisibleTrackingRow(row) {
+  return !isExcludedTrackingSource({ city: row?.city, ipMasked: row?.ip_masked });
+}
 
 async function getAllEvents(path) {
   const batchSize = 1000;
@@ -33,16 +37,18 @@ export default async function handler(request, response) {
     const allEvents = url.searchParams.get("allEvents") === "true";
     const defaultEventLimit = ipHash || includeJourneys || allEvents ? 1000 : 50;
     const eventLimit = Math.min(Math.max(Number(url.searchParams.get("eventLimit")) || defaultEventLimit, 1), 1000);
-    const visitors = await supabaseRequest(`portfolio_visitors?select=*&order=last_seen.desc&limit=${limit}`);
+    const visitorRows = await supabaseRequest(`portfolio_visitors?select=*&order=last_seen.desc&limit=${limit}`);
     const eventFilter = ipHash
       ? `&ip_hash=eq.${encodeURIComponent(ipHash)}`
       : includeJourneys
         ? ""
         : "&event_type=neq.leave";
     const eventsPath = `portfolio_visit_events?select=*&order=visited_at.desc${eventFilter}`;
-    const events = allEvents
+    const eventRows = allEvents
       ? await getAllEvents(eventsPath)
       : await supabaseRequest(`${eventsPath}&limit=${eventLimit}`);
+    const visitors = (Array.isArray(visitorRows) ? visitorRows : []).filter(isVisibleTrackingRow);
+    const events = (Array.isArray(eventRows) ? eventRows : []).filter(isVisibleTrackingRow);
     const totalVisits = Array.isArray(visitors)
       ? visitors.reduce((total, visitor) => total + Number(visitor.visit_count || 0), 0)
       : 0;

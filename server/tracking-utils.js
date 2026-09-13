@@ -97,6 +97,13 @@ export function getLocation(request) {
   };
 }
 
+export function isExcludedTrackingSource({ city = "", ipMasked = "" } = {}) {
+  const normalizedCity = String(city).trim().toLocaleLowerCase("en-US");
+
+  return normalizedCity === "san jose"
+    || (normalizedCity === "brignoles" && ipMasked === "92.150.184.xxx");
+}
+
 function decodeHeader(value = "") {
   if (!value) return "";
 

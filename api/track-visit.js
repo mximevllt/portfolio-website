@@ -5,6 +5,7 @@ import {
   getHeader,
   getLocation,
   hashIp,
+  isExcludedTrackingSource,
   maskIp,
   readJsonBody,
   sendJson,
@@ -50,6 +51,12 @@ export default async function handler(request, response) {
     const ipMasked = maskIp(ipAddress);
     const storeRawIp = process.env.TRACK_STORE_RAW_IP === "true";
     const location = getLocation(request);
+
+    if (isExcludedTrackingSource({ city: location.city, ipMasked })) {
+      sendNoContent(response);
+      return;
+    }
+
     const deviceType = getDeviceType(userAgent);
     const browser = getBrowser(userAgent);
     const pagePath = normalizePagePath(body.pagePath || body.path || "/");
