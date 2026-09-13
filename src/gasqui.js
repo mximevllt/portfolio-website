@@ -101,6 +101,155 @@ function initImageSwitches() {
   });
 }
 
+function updateProjectCopy() {
+  const visionTitle = document.querySelector(".vision-grid h2");
+  if (visionTitle) {
+    visionTitle.innerHTML = "De l’auto-cueillette germanique<br><em>à un paysage provençal.</em>";
+  }
+
+  const cortenCopy = document.querySelector(".corten-story .detail-copy");
+  if (!cortenCopy) return;
+
+  const title = cortenCopy.querySelector("h3");
+  if (title) title.innerHTML = "Des bordures nettes<br><em>pour les massifs.</em>";
+
+  const paragraphs = [...cortenCopy.querySelectorAll(":scope > p:not(.detail-index)")];
+  if (paragraphs[0]) {
+    paragraphs[0].textContent =
+      "Des bordures en acier corten séparent les chemins en clapissette des plantations. Posées au ras du sol, elles maintiennent la terre et le paillage en place et empêchent les matériaux de se mélanger.";
+  }
+  if (paragraphs[1]) {
+    paragraphs[1].textContent =
+      "Elles suivent les courbes du plan et donnent aux massifs une limite propre et régulière. Leur finition oxydée s’accorde simplement avec la terre cuite et les sols minéraux du jardin.";
+  }
+  paragraphs.slice(2).forEach((paragraph) => paragraph.remove());
+  cortenCopy.querySelector(".detail-note")?.remove();
+}
+
+function initAnimationReplays() {
+  document
+    .querySelectorAll(".garland-plan figcaption button, .mirror-plan figcaption button")
+    .forEach((button) => {
+      button.type = "button";
+      button.addEventListener("click", () => {
+        const animation = button.closest(".garland-plan, .mirror-plan");
+        if (!animation) return;
+        animation.classList.remove("is-visible");
+        void animation.offsetWidth;
+        requestAnimationFrame(() => animation.classList.add("is-visible"));
+      });
+    });
+}
+
+function initZones() {
+  const selector = document.querySelector(".zone-selector");
+  const feature = document.querySelector(".zone-feature");
+  if (!selector || !feature) return;
+
+  const zones = [
+    {
+      image: "/assets/gasqui/plants/mediterraneennes-lavande-vraie.jpg",
+      alt: "Jardin provençal",
+      caption: "Senteurs · argent · lumière",
+      kicker: "01 — La mémoire du lieu",
+      title: "Jardin provençal",
+      description:
+        "Une scène sèche et lumineuse où les feuillages gris, les ombelles et les parfums familiers répondent à la pierre. La palette privilégie les plantes sobres, capables d’installer une présence généreuse avec peu d’eau.",
+      facts: ["Lavande vraie", "Fenouil sauvage", "Orlaya grandiflora", "Immortelles"]
+    },
+    {
+      image: "/assets/gasqui/key-elements/terrasse-terre-cuite.jpg",
+      alt: "Espace central du jardin",
+      caption: "Terrasse · ombre · partage",
+      kicker: "02 — Le cœur du jardin",
+      title: "Espace central",
+      description:
+        "La dalle existante devient le point de rencontre du jardin. Les arbres taillés apportent l’ombre, les terrasses accueillent les pauses et les différents chemins se rejoignent autour de cet espace commun.",
+      facts: ["Terre cuite", "Table commune", "Arbres taillés", "Départ des promenades"]
+    },
+    {
+      image: "/assets/gasqui/plants/exotiques-kniphofia.jpg",
+      alt: "Jardin exotique",
+      caption: "Silhouettes · couleurs · contraste",
+      kicker: "03 — Le contrepoint",
+      title: "Jardin exotique",
+      description:
+        "Une allée plus directe mène vers la serre au milieu de feuillages graphiques et de floraisons franches. Les espèces sont choisies pour leur aspect dépaysant et leur adaptation au climat provençal.",
+      facts: ["Kniphofia", "Agapanthe", "Grevillea", "Callistemon"]
+    },
+    {
+      image: "/assets/gasqui/key-elements/fontaine-loin.jpg",
+      alt: "Restanque herborée",
+      caption: "Fontaine · culture · belvédère",
+      kicker: "04 — Le jardin utile",
+      title: "Restanque herborée",
+      description:
+        "La restanque rassemble les plantes utiles et médicinales autour de la fontaine ancienne. Une terrasse en bois domine le jardin et offre un point d’arrêt au-dessus des zones de culture.",
+      facts: ["Ortie", "Consoude", "Camomille", "Achillée millefeuille"]
+    }
+  ];
+
+  const buttons = [...selector.querySelectorAll("button")];
+  const render = (index) => {
+    const zone = zones[index];
+    if (!zone) return;
+    buttons.forEach((button, buttonIndex) => {
+      const isActive = buttonIndex === index;
+      button.classList.toggle("active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+    feature.innerHTML = `
+      <figure>
+        <img src="${zone.image}" alt="${zone.alt}">
+        <figcaption>${zone.caption}</figcaption>
+      </figure>
+      <div class="zone-content">
+        <p class="kicker">${zone.kicker}</p>
+        <h3>${zone.title}</h3>
+        <p class="zone-description">${zone.description}</p>
+        <div class="zone-facts">${zone.facts.map((fact) => `<span>${fact}</span>`).join("")}</div>
+        <a href="#palette" class="text-link"><span>Explorer sa palette</span><b>↓</b></a>
+      </div>`;
+  };
+
+  buttons.forEach((button, index) => {
+    button.type = "button";
+    button.addEventListener("click", () => render(index));
+  });
+  render(0);
+}
+
+function initPlantFilters() {
+  const buttons = [...document.querySelectorAll(".filters button")];
+  const cards = [...document.querySelectorAll(".plant-card")];
+  if (!buttons.length || !cards.length) return;
+
+  const normalize = (value) =>
+    value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+
+  buttons.forEach((button) => {
+    button.type = "button";
+    button.addEventListener("click", () => {
+      const selectedCategory = normalize(button.firstChild?.textContent || "");
+      let visibleIndex = 0;
+      cards.forEach((card) => {
+        const cardCategory = normalize(card.querySelector(":scope > p")?.textContent || "");
+        const isVisible = selectedCategory === "toutes" || cardCategory === selectedCategory;
+        card.hidden = !isVisible;
+        if (isVisible) {
+          card.style.animationDelay = `${(visibleIndex % 6) * 45}ms`;
+          visibleIndex += 1;
+        }
+      });
+      buttons.forEach((item) => {
+        const isActive = item === button;
+        item.classList.toggle("active", isActive);
+        item.setAttribute("aria-pressed", String(isActive));
+      });
+    });
+  });
+}
+
 function initMenu() {
   const menuButton = document.querySelector(".menu-button");
   const navigation = document.querySelector("#main-navigation");
@@ -150,9 +299,13 @@ async function loadProject() {
   document.querySelector(".final-copy")?.remove();
   document.querySelector(".final-section")?.classList.add("plan-download-only");
   document.querySelector(".brand")?.setAttribute("href", "/index.html#projets");
+  updateProjectCopy();
   revealOnScroll();
   initPlan();
   initImageSwitches();
+  initAnimationReplays();
+  initZones();
+  initPlantFilters();
   initMenu();
   animateStats();
 }
