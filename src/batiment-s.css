@@ -472,6 +472,7 @@
     position: sticky;
     z-index: 4;
     top: calc(var(--nav-height) + 30px);
+    box-shadow: 0 -30px 0 #fff;
     cursor: default;
   }
 
