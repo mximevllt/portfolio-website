@@ -18,6 +18,7 @@ let latestDashboardData = null;
 let journeyRequestId = 0;
 let dashboardRequestId = 0;
 let journeysLoading = false;
+const VISIT_GAP_MS = 5 * 60 * 1000;
 
 function getToken() {
   return sessionStorage.getItem(tokenKey) || "";
@@ -71,19 +72,76 @@ function formatDuration(seconds) {
   return minutes ? `${minutes} min ${String(remaining).padStart(2, "0")} s` : `${remaining} s`;
 }
 
+function eventTime(event) {
+  const value = new Date(event?.visited_at).getTime();
+  return Number.isFinite(value) ? value : 0;
+}
+
+function createVisitSession(events) {
+  const latestEvent = events[0];
+  const firstEvent = events[events.length - 1];
+  return {
+    ...latestEvent,
+    events,
+    pageCount: events.length,
+    startedAt: firstEvent.visited_at
+  };
+}
+
+function getVisitSessions(events) {
+  const eventsByIp = new Map();
+
+  for (const event of events || []) {
+    if (event.event_type === "leave" || !event.ip_hash) continue;
+    const visitorEvents = eventsByIp.get(event.ip_hash) || [];
+    visitorEvents.push(event);
+    eventsByIp.set(event.ip_hash, visitorEvents);
+  }
+
+  const sessions = [];
+  for (const visitorEvents of eventsByIp.values()) {
+    const pages = [...visitorEvents].sort((a, b) => eventTime(b) - eventTime(a));
+    let currentSession = [];
+
+    for (const page of pages) {
+      const previousPage = currentSession[currentSession.length - 1];
+      if (previousPage && eventTime(previousPage) - eventTime(page) > VISIT_GAP_MS) {
+        sessions.push(createVisitSession(currentSession));
+        currentSession = [];
+      }
+      currentSession.push(page);
+    }
+
+    if (currentSession.length) sessions.push(createVisitSession(currentSession));
+  }
+
+  return sessions.sort((a, b) => eventTime(b) - eventTime(a));
+}
+
+function formatPageCount(count) {
+  return `${count} ${count === 1 ? "page visitée" : "pages visitées"}`;
+}
+
 function renderJourney(ipHash) {
   if (journeysLoading && !journeysByIp.has(ipHash)) {
     return "<span>Chargement du parcours…</span>";
   }
 
-  const events = [...(journeysByIp.get(ipHash) || [])].sort((a, b) => new Date(a.visited_at) - new Date(b.visited_at));
+  const events = [...(journeysByIp.get(ipHash) || [])];
   const leaves = new Map(events.filter((event) => event.event_type === "leave" && event.page_session_id).map((event) => [event.page_session_id, event]));
-  const pages = events.filter((event) => event.event_type !== "leave");
-  if (!pages.length) return "<span>Pas encore de parcours enregistré</span>";
-  return `<ol class="admin-journey">${pages.map((event) => {
-    const leave = event.page_session_id ? leaves.get(event.page_session_id) : null;
-    return `<li><span>${clean(formatPagePath(event.page_path))}</span><small>${formatDate(event.visited_at)} · ${formatDuration(leave?.duration_seconds)}</small></li>`;
-  }).join("")}</ol>`;
+  const sessions = getVisitSessions(events);
+  if (!sessions.length) return "<span>Pas encore de parcours enregistré</span>";
+
+  return `<div class="admin-journey">${sessions.map((session, index) => {
+    const label = index === 0 ? "Visite la plus récente" : "Nouvelle visite";
+    return `<section class="admin-journey-session${index ? " admin-journey-session--separated" : ""}">
+      <div class="admin-journey-session__break"><span>${label}</span><time>${formatDate(session.startedAt)}</time></div>
+      <ol>${session.events.map((event) => {
+        const leave = event.page_session_id ? leaves.get(event.page_session_id) : null;
+        return `<li><span>${clean(formatPagePath(event.page_path))}</span><small>${formatDate(event.visited_at)} · ${formatDuration(leave?.duration_seconds)}</small></li>`;
+      }).join("")}</ol>
+    </section>`;
+  }).join("")}</div>`;
 }
 
 function getLatestVisitors(data) {
@@ -170,16 +228,16 @@ function renderRows(data) {
 
   const eventsTable = eventsBody.closest("table");
   const pageHeading = eventsTable.querySelector("thead th:last-child");
-  pageHeading.innerHTML = `<button type="button" class="admin-journey-toggle" data-admin-latest-toggle>${latestVisitsExpanded ? "Pages visitées" : "Page"}</button>`;
-  const eventRows = latestVisitsExpanded ? getLatestVisitors(data) : (data.latestEvents || []);
+  pageHeading.innerHTML = `<button type="button" class="admin-journey-toggle" data-admin-latest-toggle>${latestVisitsExpanded ? "Pages visitées" : "Pages"}</button>`;
+  const eventRows = latestVisitsExpanded ? getLatestVisitors(data) : getVisitSessions(data.latestEvents);
   eventsBody.innerHTML = eventRows
     .map((event) => `
         <tr>
-          <td>${formatDate(event.visited_at)}</td>
+          <td>${formatDate(latestVisitsExpanded ? event.visited_at : event.startedAt)}</td>
           <td>${clean(event.location_label)}</td>
           <td>${escapeHtml(event.ip_address || event.ip_masked || "-")}</td>
           <td>${clean(event.device_type)}</td>
-          <td class="admin-journey-cell">${latestVisitsExpanded ? renderJourney(event.ip_hash) : clean(formatPagePath(event.page_path))}</td>
+          <td class="admin-journey-cell">${latestVisitsExpanded ? renderJourney(event.ip_hash) : formatPageCount(event.pageCount)}</td>
         </tr>
       `
     )
@@ -223,7 +281,7 @@ async function loadDashboard() {
   if (latestVisitsExpanded) {
     await loadJourneys(data, false);
   } else {
-    setStatus(`${data.latestEvents.length} visites affichées.`, "success");
+    setStatus(`${getVisitSessions(data.latestEvents).length} visites affichées.`, "success");
   }
 }
 
