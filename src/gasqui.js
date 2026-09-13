@@ -338,7 +338,7 @@ function initFinalPlan() {
   const preview = plan.querySelector("img");
   if (preview) {
     preview.src = "/assets/gasqui/plan/plan-jardin-v3-preview.png";
-    preview.alt = "Aperçu recadré du plan jardin Gasqui V3, sans légende";
+    preview.alt = "Aperçu recadré du plan jardin Gasqui V3, sans cartouche";
   }
 
   plan.removeAttribute("href");
@@ -357,7 +357,7 @@ function initFinalPlan() {
     modal.setAttribute("aria-label", "Plan jardin Gasqui V3");
     modal.innerHTML = `
       <button class="modal-close" type="button" aria-label="Fermer le plan">×</button>
-      <iframe src="/assets/gasqui/plan/plan-jardin-v3.pdf#view=FitH" title="Plan jardin Gasqui V3 sans légende"></iframe>`;
+      <iframe src="/assets/gasqui/plan/plan-jardin-v3.pdf#view=FitH" title="Plan jardin Gasqui V3 sans cartouche"></iframe>`;
 
     const close = () => {
       modal.remove();
