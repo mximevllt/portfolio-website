@@ -50,7 +50,10 @@
   function sendLeave() {
     if (leaveSent) return;
     leaveSent = true;
-    if (visibleSince) visibleDurationMs += Date.now() - visibleSince;
+    if (visibleSince !== null) {
+      visibleDurationMs += Date.now() - visibleSince;
+      visibleSince = null;
+    }
     send({
       ...payload,
       eventType: "leave",
@@ -74,15 +77,20 @@
   }, { capture: true });
 
   document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden" && visibleSince) {
-      visibleDurationMs += Date.now() - visibleSince;
-      visibleSince = null;
-    } else if (document.visibilityState === "visible" && !visibleSince) {
+    if (document.visibilityState === "hidden") {
+      // visibilitychange is the most reliable signal when a tab is closed,
+      // especially on mobile browsers where pagehide/beforeunload may not run.
+      sendLeave();
+    } else if (document.visibilityState === "visible" && !leaveSent && !visibleSince) {
       visibleSince = Date.now();
     }
   });
 
   window.addEventListener("pagehide", () => {
+    sendLeave();
+  });
+
+  window.addEventListener("beforeunload", () => {
     sendLeave();
   });
 })();
