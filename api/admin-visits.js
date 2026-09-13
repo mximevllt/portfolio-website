@@ -4,6 +4,22 @@ function isVisibleTrackingRow(row) {
   return !isExcludedTrackingSource({ city: row?.city, ipMasked: row?.ip_masked });
 }
 
+async function purgeExcludedTrackingRows() {
+  const excludedPaths = [
+    "city=eq.San%20Jose",
+    "city=eq.Brignoles&ip_masked=eq.92.150.184.xxx"
+  ];
+
+  for (const table of ["portfolio_visit_events", "portfolio_visitors"]) {
+    for (const filter of excludedPaths) {
+      await supabaseRequest(`${table}?${filter}`, {
+        method: "DELETE",
+        headers: { Prefer: "return=minimal" }
+      });
+    }
+  }
+}
+
 async function getAllEvents(path) {
   const batchSize = 1000;
   const events = [];
@@ -30,6 +46,8 @@ export default async function handler(request, response) {
   }
 
   try {
+    await purgeExcludedTrackingRows();
+
     const url = new URL(request.url || "/api/admin-visits", "https://portfolio.local");
     const limit = Math.min(Math.max(Number(url.searchParams.get("limit")) || 250, 1), 500);
     const ipHash = url.searchParams.get("ipHash") || "";
