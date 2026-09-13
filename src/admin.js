@@ -84,7 +84,6 @@ function getLatestVisitors(data) {
 
 async function loadJourneys(data, showStatus = true) {
   const requestId = ++journeyRequestId;
-  const uniqueIps = getLatestVisitors(data).map((event) => event.ip_hash);
   const token = getToken();
 
   journeysLoading = true;
@@ -92,17 +91,21 @@ async function loadJourneys(data, showStatus = true) {
   renderRows(data);
 
   try {
-    const responses = await Promise.all(uniqueIps.map(async (ipHash) => {
-      const response = await fetch(`/api/admin-visits?ipHash=${encodeURIComponent(ipHash)}&eventLimit=1000`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (!response.ok) throw new Error("Impossible de charger les parcours.");
-      const journeyData = await response.json();
-      return [ipHash, journeyData.latestEvents || []];
-    }));
+    const response = await fetch("/api/admin-visits?includeJourneys=true&eventLimit=1000", {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (!response.ok) throw new Error("Impossible de charger les parcours.");
+    const journeyData = await response.json();
+    const journeys = new Map();
+    for (const event of journeyData.latestEvents || []) {
+      if (!event.ip_hash) continue;
+      const events = journeys.get(event.ip_hash) || [];
+      events.push(event);
+      journeys.set(event.ip_hash, events);
+    }
 
     if (requestId !== journeyRequestId) return;
-    journeysByIp = new Map(responses);
+    journeysByIp = journeys;
     journeysLoading = false;
     if (latestVisitsExpanded) renderRows(latestDashboardData || data);
     setStatus("Parcours affichés. Les durées sont mesurées pour les nouvelles visites.", "success");
