@@ -241,8 +241,10 @@
 }
 
 .bs-zoning-stage__image[data-zone-view="travail"] {
-  object-fit: contain;
-  object-position: left top;
+  inset: 11.1351% auto auto 2.6936%;
+  width: 82.2222%;
+  height: auto;
+  object-fit: initial;
 }
 
 .bs-zone-copy {
@@ -469,7 +471,7 @@
   .bs-zoning-stage {
     position: sticky;
     z-index: 4;
-    top: calc(var(--nav-height) + 12px);
+    top: calc(var(--nav-height) + 30px);
     cursor: default;
   }
 

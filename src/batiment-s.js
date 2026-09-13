@@ -122,15 +122,19 @@ if (stage) {
   const zoneAt = (x, y) => {
     for (const zone of maskOrder) {
       let maskX = x;
+      let maskY = y;
       if (zone === "travail") {
-        const workView = views.get("travail");
-        const stageRatio = stage.clientWidth / stage.clientHeight;
-        const workRatio = workView.naturalWidth / workView.naturalHeight;
-        const visibleWidth = workRatio / stageRatio;
-        if (maskX > visibleWidth) continue;
-        maskX /= visibleWidth;
+        const workCanvas = { left: 80 / 2970, top: 155 / 1392, width: 2442 / 2970, height: 1212 / 1392 };
+        if (
+          maskX < workCanvas.left ||
+          maskX > workCanvas.left + workCanvas.width ||
+          maskY < workCanvas.top ||
+          maskY > workCanvas.top + workCanvas.height
+        ) continue;
+        maskX = (maskX - workCanvas.left) / workCanvas.width;
+        maskY = (maskY - workCanvas.top) / workCanvas.height;
       }
-      if (matchesMask(masks.get(zone), maskX, y)) return zone;
+      if (matchesMask(masks.get(zone), maskX, maskY)) return zone;
     }
     return "vide";
   };
