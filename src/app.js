@@ -9,6 +9,17 @@ const siteHeader = document.querySelector(".site-header");
 
 const projects = [
   {
+    slug: "clocher-saint-louis",
+    title: "Clocher Saint-Louis",
+    badge: "Octobre 2026",
+    note: "plus d'informations à venir",
+    images: [
+      { file: "Clocher Saint-Louis - Entree.png", orientation: "landscape" },
+      { file: "Clocher Saint-Louis - Chambre.png", orientation: "landscape" },
+      { file: "Clocher Saint-Louis - WC.png", orientation: "portrait" }
+    ]
+  },
+  {
     slug: "perchee-design-parade-2026",
     title: "Perchée",
     badge: "Design Parade 2026",
@@ -56,17 +67,6 @@ const projects = [
       { file: "Château Gasqui - Abri été.jpg", orientation: "landscape" },
       { file: "Château Gasqui - Terrasse terre cuite.jpg", orientation: "landscape" },
       { file: "Château Gasqui - Miroir corten.jpg", orientation: "landscape" }
-    ]
-  },
-  {
-    slug: "clocher-saint-louis",
-    title: "Clocher Saint-Louis",
-    suffix: "- Toulon, Place de l'Equerre",
-    note: "plus d'informations à venir",
-    images: [
-      { file: "Clocher Saint-Louis - Entree.png", orientation: "landscape" },
-      { file: "Clocher Saint-Louis - Chambre.png", orientation: "landscape" },
-      { file: "Clocher Saint-Louis - WC.png", orientation: "portrait" }
     ]
   },
   {
