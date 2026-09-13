@@ -17,6 +17,18 @@ function cleanString(value, maxLength = 500) {
   return value.trim().slice(0, maxLength);
 }
 
+function normalizePagePath(value) {
+  const rawPath = cleanString(value, 320) || "/";
+
+  try {
+    const url = new URL(rawPath, "https://portfolio.local");
+    const pathname = url.pathname === "/index.html" ? "/" : url.pathname;
+    return cleanString(`${pathname}${url.search}${url.hash}`, 320) || "/";
+  } catch {
+    return rawPath;
+  }
+}
+
 export default async function handler(request, response) {
   if (request.method !== "POST") {
     sendJson(response, 405, { error: "Method not allowed" });
@@ -40,7 +52,7 @@ export default async function handler(request, response) {
     const location = getLocation(request);
     const deviceType = getDeviceType(userAgent);
     const browser = getBrowser(userAgent);
-    const pagePath = cleanString(body.pagePath || body.path || "/", 320);
+    const pagePath = normalizePagePath(body.pagePath || body.path || "/");
     const pageTitle = cleanString(body.pageTitle || body.title, 240);
     const referrer = cleanString(body.referrer, 500);
     const language = cleanString(body.language, 80);

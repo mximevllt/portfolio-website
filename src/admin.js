@@ -41,6 +41,19 @@ function clean(value) {
   return escapeHtml(value || "-");
 }
 
+function formatPagePath(value) {
+  const pagePath = String(value || "");
+
+  try {
+    const url = new URL(pagePath, "https://portfolio.local");
+    if (url.pathname === "/" || url.pathname === "/index.html") return "Accueil";
+  } catch {
+    // Keep the recorded value when it cannot be interpreted as a URL path.
+  }
+
+  return pagePath || "-";
+}
+
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -69,7 +82,7 @@ function renderJourney(ipHash) {
   if (!pages.length) return "<span>Pas encore de parcours enregistré</span>";
   return `<ol class="admin-journey">${pages.map((event) => {
     const leave = event.page_session_id ? leaves.get(event.page_session_id) : null;
-    return `<li><span>${clean(event.page_path)}</span><small>${formatDate(event.visited_at)} · ${formatDuration(leave?.duration_seconds)}</small></li>`;
+    return `<li><span>${clean(formatPagePath(event.page_path))}</span><small>${formatDate(event.visited_at)} · ${formatDuration(leave?.duration_seconds)}</small></li>`;
   }).join("")}</ol>`;
 }
 
@@ -148,7 +161,7 @@ function renderRows(data) {
           <td>${visitor.visit_count || 0}</td>
           <td>${clean(visitor.device_type)}</td>
           <td>${clean(visitor.browser)}</td>
-          <td>${clean(visitor.last_page_path)}</td>
+          <td>${clean(formatPagePath(visitor.last_page_path))}</td>
           <td>${formatDate(visitor.last_seen)}</td>
         </tr>
       `;
@@ -166,7 +179,7 @@ function renderRows(data) {
           <td>${clean(event.location_label)}</td>
           <td>${escapeHtml(event.ip_address || event.ip_masked || "-")}</td>
           <td>${clean(event.device_type)}</td>
-          <td class="admin-journey-cell">${latestVisitsExpanded ? renderJourney(event.ip_hash) : clean(event.page_path)}</td>
+          <td class="admin-journey-cell">${latestVisitsExpanded ? renderJourney(event.ip_hash) : clean(formatPagePath(event.page_path))}</td>
         </tr>
       `
     )
