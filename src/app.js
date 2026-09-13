@@ -92,8 +92,8 @@ const projects = [
   {
     slug: "batiment-s-universite-garde",
     title: "Bâtiment S",
-    suffix: "- Université de la Garde",
-    note: "plus d'informations à venir",
+    suffix: "- Université de Toulon",
+    href: "batiment-s.html",
     images: [
       { file: "Bâtiment S 01.png", orientation: "landscape" },
       { file: "Bâtiment S 02.png", orientation: "landscape" }

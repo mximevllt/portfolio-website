@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="description" content="Bâtiment S — un nouveau cœur de vie étudiante pour le campus de l’Université de Toulon." />
+    <title>Bâtiment S | Maxime Vallat</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <link rel="stylesheet" href="/src/batiment-s.css" />
+    <script type="module" src="/src/batiment-s.js"></script>
+  </head>
+  <body class="project-detail-page batiment-s-page">
+    <header class="site-header project-header" data-animate>
+      <button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="siteMenu">
+        <span></span>
+        <span></span>
+      </button>
+
+      <a class="nav-brand" href="index.html" aria-label="Retour à l'accueil">
+        <img src="/assets/icone-beige.png" alt="Maxime Vallat" />
+      </a>
+
+      <nav class="site-menu" id="siteMenu" aria-label="Navigation principale">
+        <a href="index.html#projets">Projets</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="batiment-s-main">
+      <section class="bs-hero bs-frame" data-animate>
+        <div class="bs-hero__copy">
+          <p class="bs-kicker">Université de Toulon · Bâtiment S</p>
+          <h1>Un nouveau bâtiment pour la vie étudiante d’un nouveau campus.</h1>
+          <p>Réaménager un bâtiment existant pour en faire un lieu identifié, ouvert et mixte : un espace commun où les étudiants peuvent travailler, se rencontrer, créer, faire du sport et accéder aux services qui leur sont destinés.</p>
+        </div>
+        <figure class="bs-hero__image">
+          <img src="/assets/batiment-s/hero-passerelle.png" alt="Vue intérieure de la passerelle multidirectrice du projet Bâtiment S." />
+        </figure>
+      </section>
+
+      <section class="bs-intro bs-frame" data-animate>
+        <div class="bs-section-heading">
+          <p>01</p>
+          <h2>Faire du hall un cœur de campus.</h2>
+        </div>
+        <div class="bs-columns">
+          <p>Le Bâtiment S possède une identité forte : un grand hall, une hauteur généreuse et de larges ouvertures. Pourtant, ce potentiel était peu exploité. Les services et les activités étudiantes restaient dispersés, tandis que le bâtiment était davantage traversé qu’habité.</p>
+          <p>Le projet s’appuie sur cette structure existante pour organiser un lieu de vie lisible. L’enjeu n’est pas d’ajouter une succession de salles isolées, mais de créer des relations visibles entre les usages, les niveaux et les personnes.</p>
+          <p>La stratégie tient en une phrase : favoriser la cohésion étudiante par l’interconnectivité. Les fonctions de travail, de détente, de création, de sport et d’information se regroupent autour d’un même volume, avec différents degrés d’intensité et de calme.</p>
+        </div>
+      </section>
+
+      <section class="bs-existing bs-frame" data-animate aria-labelledby="bs-existing-title">
+        <div class="bs-existing__heading">
+          <p class="bs-eyebrow">Le point de départ</p>
+          <h2 id="bs-existing-title">Préserver l’identité, activer les usages.</h2>
+          <p>Le projet conserve les qualités spatiales du bâtiment — sa double hauteur, ses façades vitrées et son grand hall — pour les rendre réellement disponibles à la vie quotidienne du campus.</p>
+        </div>
+        <div class="bs-existing__images">
+          <figure><img src="/assets/batiment-s/existant-02.jpg" alt="Vue de l’existant du Bâtiment S." loading="lazy" /></figure>
+          <figure><img src="/assets/batiment-s/existant-escalier.jpg" alt="Escalier central d’origine du Bâtiment S." loading="lazy" /></figure>
+          <figure><img src="/assets/batiment-s/existant-03.jpg" alt="Détail de l’existant du Bâtiment S." loading="lazy" /></figure>
+        </div>
+      </section>
+
+      <section class="bs-bridge bs-frame" data-animate>
+        <div class="bs-section-heading">
+          <p>02</p>
+          <h2>Une passerelle qui relie les fonctions.</h2>
+        </div>
+        <div class="bs-columns bs-columns--bridge">
+          <p>Le geste central est une passerelle multidirectrice déployée dans le grand hall. Une partie du plancher existant du R+1 est retirée pour prolonger la perception de la double hauteur et connecter directement les niveaux.</p>
+          <p>La circulation ne sert plus uniquement à aller d’un point à un autre. Elle devient un espace d’usage : un lieu pour déjeuner, faire une pause, observer l’activité du bâtiment et accéder aux différents pôles sans rompre avec le volume central.</p>
+        </div>
+      </section>
+
+      <section class="bs-zoning bs-frame" data-animate aria-labelledby="bs-zoning-title">
+        <div class="bs-zoning__heading">
+          <p class="bs-eyebrow">Organisation spatiale</p>
+          <h2 id="bs-zoning-title">Explorer les espaces du projet.</h2>
+          <p>Déplacez le pointeur sur le bâtiment pour ouvrir les différents pôles programmatiques.</p>
+        </div>
+
+        <div class="bs-zoning-layout">
+          <div class="bs-zoning-stage" data-zoning-stage tabindex="0" aria-label="Isométrie interactive des espaces du Bâtiment S">
+            <img class="bs-zoning-stage__image is-active" data-zone-view="general" src="/assets/batiment-s/zoning-general.png" alt="Vue générale extérieure fermée du Bâtiment S." />
+            <img class="bs-zoning-stage__image" data-zone-view="vide" src="/assets/batiment-s/zoning-vide.png" alt="" aria-hidden="true" />
+            <img class="bs-zoning-stage__image" data-zone-view="rangements" data-zone-mask="rangements" src="/assets/batiment-s/zoning-rangements.png" alt="" aria-hidden="true" />
+            <img class="bs-zoning-stage__image" data-zone-view="art" data-zone-mask="art" src="/assets/batiment-s/zoning-art.png" alt="" aria-hidden="true" />
+            <img class="bs-zoning-stage__image" data-zone-view="vie" data-zone-mask="vie" src="/assets/batiment-s/zoning-vie.png" alt="" aria-hidden="true" />
+            <img class="bs-zoning-stage__image" data-zone-view="sport" data-zone-mask="sport" src="/assets/batiment-s/zoning-sport.png" alt="" aria-hidden="true" />
+            <img class="bs-zoning-stage__image" data-zone-view="travail" data-zone-mask="travail" src="/assets/batiment-s/zoning-travail.png" alt="" aria-hidden="true" />
+            <img class="bs-zoning-stage__image" data-zone-view="passerelle" data-zone-mask="passerelle" src="/assets/batiment-s/zoning-passerelle.png" alt="" aria-hidden="true" />
+          </div>
+
+          <aside class="bs-zone-copy" data-zone-copy aria-live="polite">
+            <p class="bs-eyebrow" data-zone-label>Vue générale</p>
+            <h3 data-zone-title>Un volume commun à activer.</h3>
+            <p data-zone-text>Le Bâtiment S devient un ensemble continu où la grande hauteur, les circulations et les usages se répondent. Survolez les zones pour découvrir leur rôle dans le projet.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="bs-spaces bs-frame" data-animate>
+        <div class="bs-spaces__image">
+          <img src="/assets/batiment-s/espace-vie.png" alt="Vue de l’espace de vie du projet Bâtiment S." loading="lazy" />
+        </div>
+        <div class="bs-spaces__copy">
+          <p class="bs-eyebrow">Une programmation mixte</p>
+          <h2>Rester, travailler, créer, se retrouver.</h2>
+          <p>Autour du hall se distribuent les espaces de détente et de déjeuner, les bureaux du DEVE, les salles de travail collectif et individuel, les casiers de l’entrée Sud, les activités artistiques et l’extension de la salle de sport.</p>
+          <p>Le projet accueille aussi des usages plus informels : jeux, pique-nique, filet de détente, jardin extérieur et mobilier modulable. Le bâtiment devient un lieu où l’on peut rester, et non plus seulement passer.</p>
+        </div>
+      </section>
+
+      <section class="bs-materials bs-frame" data-animate>
+        <div class="bs-section-heading">
+          <p>03</p>
+          <h2>Des matériaux au service de l’ouverture.</h2>
+        </div>
+        <div class="bs-materials__grid">
+          <article>
+            <h3>Bois</h3>
+            <p>Le chêne et le contreplaqué apportent une continuité chaleureuse entre plateformes, circulations et mobilier.</p>
+          </article>
+          <article>
+            <h3>Béton ciré</h3>
+            <p>Au rez-de-chaussée, il unifie les sols et donne une base minérale qui met en valeur la végétation.</p>
+          </article>
+          <article>
+            <h3>Verre & végétation</h3>
+            <p>Le verre protège acoustiquement sans couper les vues ; la végétation anime la double hauteur et filtre certains rapports entre les espaces.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="bs-plan bs-frame" data-animate>
+        <div class="bs-plan__heading">
+          <p class="bs-eyebrow">Plan général</p>
+          <h2>Un programme regroupé autour du hall.</h2>
+          <p>Le plan rassemble les fonctions étudiantes dans un même ensemble et rend lisible leur articulation autour du volume central.</p>
+        </div>
+        <figure>
+          <a href="/assets/batiment-s/plan-general.pdf" target="_blank" rel="noopener" aria-label="Ouvrir le plan général du Bâtiment S au format PDF">
+            <img src="/assets/batiment-s/plan-general.jpg" alt="Plan 2D général du projet Bâtiment S." loading="lazy" />
+          </a>
+          <figcaption>Plan général — cliquer pour l’ouvrir en grand.</figcaption>
+        </figure>
+      </section>
+    </main>
+
+    <script src="/src/app.js"></script>
+    <script src="/src/tracking.js"></script>
+  </body>
+</html>
