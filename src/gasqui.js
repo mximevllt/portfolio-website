@@ -331,6 +331,61 @@ function initPlantCards() {
   });
 }
 
+function initFinalPlan() {
+  const plan = document.querySelector(".final-plan");
+  if (!plan) return;
+
+  const preview = plan.querySelector("img");
+  if (preview) {
+    preview.src = "/assets/gasqui/plan/plan-jardin-v3-preview.png";
+    preview.alt = "Aperçu recadré du plan jardin Gasqui V3, sans légende";
+  }
+
+  plan.removeAttribute("href");
+  plan.removeAttribute("download");
+  plan.querySelector("span")?.remove();
+  plan.setAttribute("role", "button");
+  plan.setAttribute("aria-haspopup", "dialog");
+  plan.setAttribute("aria-label", "Ouvrir le plan jardin Gasqui V3 en plein écran");
+  plan.tabIndex = 0;
+
+  const open = () => {
+    const modal = document.createElement("div");
+    modal.className = "plan-modal";
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("aria-label", "Plan jardin Gasqui V3");
+    modal.innerHTML = `
+      <button class="modal-close" type="button" aria-label="Fermer le plan">×</button>
+      <iframe src="/assets/gasqui/plan/plan-jardin-v3.pdf#view=FitH" title="Plan jardin Gasqui V3 sans légende"></iframe>`;
+
+    const close = () => {
+      modal.remove();
+      document.removeEventListener("keydown", onKeydown);
+      plan.focus();
+    };
+    const onKeydown = (event) => {
+      if (event.key === "Escape") close();
+    };
+
+    modal.querySelector(".modal-close")?.addEventListener("click", close);
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) close();
+    });
+    document.addEventListener("keydown", onKeydown);
+    document.body.append(modal);
+    modal.querySelector(".modal-close")?.focus();
+  };
+
+  plan.addEventListener("click", open);
+  plan.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      open();
+    }
+  });
+}
+
 function initMenu() {
   const menuButton = document.querySelector(".menu-button");
   const navigation = document.querySelector("#main-navigation");
@@ -388,6 +443,7 @@ async function loadProject() {
   initZones();
   initPlantFilters();
   initPlantCards();
+  initFinalPlan();
   initMenu();
   animateStats();
 }
