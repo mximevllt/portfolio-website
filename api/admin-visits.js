@@ -17,7 +17,9 @@ export default async function handler(request, response) {
     const ipHash = url.searchParams.get("ipHash") || "";
     const eventLimit = Math.min(Math.max(Number(url.searchParams.get("eventLimit")) || (ipHash ? 1000 : 50), 1), 1000);
     const visitors = await supabaseRequest(`portfolio_visitors?select=*&order=last_seen.desc&limit=${limit}`);
-    const eventFilter = ipHash ? `&ip_hash=eq.${encodeURIComponent(ipHash)}` : "";
+    const eventFilter = ipHash
+      ? `&ip_hash=eq.${encodeURIComponent(ipHash)}`
+      : "&event_type=neq.leave";
     const events = await supabaseRequest(`portfolio_visit_events?select=*&order=visited_at.desc${eventFilter}&limit=${eventLimit}`);
     const totalVisits = Array.isArray(visitors)
       ? visitors.reduce((total, visitor) => total + Number(visitor.visit_count || 0), 0)

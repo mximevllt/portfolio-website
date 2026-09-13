@@ -14,6 +14,10 @@ const tokenKey = "portfolio-admin-token";
 let refreshTimer = 0;
 let latestVisitsExpanded = false;
 let journeysByIp = new Map();
+let latestDashboardData = null;
+let journeyRequestId = 0;
+let dashboardRequestId = 0;
+let journeysLoading = false;
 
 function getToken() {
   return sessionStorage.getItem(tokenKey) || "";
@@ -55,7 +59,11 @@ function formatDuration(seconds) {
 }
 
 function renderJourney(ipHash) {
-  const events = (journeysByIp.get(ipHash) || []).sort((a, b) => new Date(a.visited_at) - new Date(b.visited_at));
+  if (journeysLoading && !journeysByIp.has(ipHash)) {
+    return "<span>Chargement du parcours…</span>";
+  }
+
+  const events = [...(journeysByIp.get(ipHash) || [])].sort((a, b) => new Date(a.visited_at) - new Date(b.visited_at));
   const leaves = new Map(events.filter((event) => event.event_type === "leave" && event.page_session_id).map((event) => [event.page_session_id, event]));
   const pages = events.filter((event) => event.event_type !== "leave");
   if (!pages.length) return "<span>Pas encore de parcours enregistré</span>";
@@ -65,22 +73,61 @@ function renderJourney(ipHash) {
   }).join("")}</ol>`;
 }
 
-async function toggleLatestVisits(data) {
-  latestVisitsExpanded = !latestVisitsExpanded;
-  if (latestVisitsExpanded) {
-    setStatus("Chargement des parcours…", "neutral");
-    const uniqueIps = [...new Set((data.latestEvents || []).map((event) => event.ip_hash).filter(Boolean))];
-    const token = getToken();
+function getLatestVisitors(data) {
+  const visitors = new Map();
+  for (const event of data.latestEvents || []) {
+    if (event.event_type === "leave" || !event.ip_hash || visitors.has(event.ip_hash)) continue;
+    visitors.set(event.ip_hash, event);
+  }
+  return [...visitors.values()];
+}
+
+async function loadJourneys(data, showStatus = true) {
+  const requestId = ++journeyRequestId;
+  const uniqueIps = getLatestVisitors(data).map((event) => event.ip_hash);
+  const token = getToken();
+
+  journeysLoading = true;
+  if (showStatus) setStatus("Chargement des parcours…", "neutral");
+  renderRows(data);
+
+  try {
     const responses = await Promise.all(uniqueIps.map(async (ipHash) => {
-      const response = await fetch(`/api/admin-visits?ipHash=${encodeURIComponent(ipHash)}&eventLimit=1000`, { headers: { Authorization: `Bearer ${token}` } });
+      const response = await fetch(`/api/admin-visits?ipHash=${encodeURIComponent(ipHash)}&eventLimit=1000`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       if (!response.ok) throw new Error("Impossible de charger les parcours.");
       const journeyData = await response.json();
       return [ipHash, journeyData.latestEvents || []];
     }));
+
+    if (requestId !== journeyRequestId) return;
     journeysByIp = new Map(responses);
+    journeysLoading = false;
+    if (latestVisitsExpanded) renderRows(latestDashboardData || data);
+    setStatus("Parcours affichés. Les durées sont mesurées pour les nouvelles visites.", "success");
+  } catch (error) {
+    if (requestId !== journeyRequestId) return;
+    journeysLoading = false;
+    if (latestVisitsExpanded) renderRows(latestDashboardData || data);
+    setStatus("Impossible de charger les parcours.", "error");
+    throw error;
   }
-  renderRows(data);
-  setStatus(latestVisitsExpanded ? "Parcours affichés. Les durées sont mesurées pour les nouvelles visites." : "Tableau à jour.", "success");
+}
+
+async function toggleLatestVisits() {
+  if (!latestDashboardData) return;
+
+  latestVisitsExpanded = !latestVisitsExpanded;
+  if (!latestVisitsExpanded) {
+    journeyRequestId += 1;
+    journeysLoading = false;
+    renderRows(latestDashboardData);
+    setStatus("Tableau à jour.", "success");
+    return;
+  }
+
+  await loadJourneys(latestDashboardData);
 }
 
 function renderRows(data) {
@@ -108,9 +155,7 @@ function renderRows(data) {
   const eventsTable = eventsBody.closest("table");
   const pageHeading = eventsTable.querySelector("thead th:last-child");
   pageHeading.innerHTML = `<button type="button" class="admin-journey-toggle" data-admin-latest-toggle>${latestVisitsExpanded ? "Pages visitées" : "Page"}</button>`;
-  const eventRows = latestVisitsExpanded
-    ? [...new Map((data.latestEvents || []).map((event) => [event.ip_hash, event])).values()]
-    : (data.latestEvents || []);
+  const eventRows = latestVisitsExpanded ? getLatestVisitors(data) : (data.latestEvents || []);
   eventsBody.innerHTML = eventRows
     .map((event) => `
         <tr>
@@ -124,13 +169,14 @@ function renderRows(data) {
     )
     .join("");
   eventsTable.querySelector("[data-admin-latest-toggle]")?.addEventListener("click", () => {
-    toggleLatestVisits(data).catch(() => setStatus("Impossible de charger les parcours.", "error"));
+    toggleLatestVisits().catch(() => {});
   });
 }
 
 async function loadDashboard() {
   const token = getToken();
   if (!token) return;
+  const requestId = ++dashboardRequestId;
 
   setStatus("Actualisation des visites...", "neutral");
 
@@ -153,12 +199,16 @@ async function loadDashboard() {
   }
 
   const data = await response.json();
-  latestVisitsExpanded = false;
-  journeysByIp = new Map();
+  if (requestId !== dashboardRequestId) return;
+  latestDashboardData = data;
   loginForm.hidden = true;
   dashboard.hidden = false;
   renderRows(data);
-  setStatus("Tableau à jour.", "success");
+  if (latestVisitsExpanded) {
+    await loadJourneys(data, false);
+  } else {
+    setStatus("Tableau à jour.", "success");
+  }
 }
 
 function startAutoRefresh() {
@@ -182,6 +232,12 @@ loginForm?.addEventListener("submit", (event) => {
 logoutButton?.addEventListener("click", () => {
   sessionStorage.removeItem(tokenKey);
   clearInterval(refreshTimer);
+  dashboardRequestId += 1;
+  journeyRequestId += 1;
+  latestDashboardData = null;
+  latestVisitsExpanded = false;
+  journeysByIp = new Map();
+  journeysLoading = false;
   dashboard.hidden = true;
   loginForm.hidden = false;
   setStatus("Session admin fermée.", "neutral");
