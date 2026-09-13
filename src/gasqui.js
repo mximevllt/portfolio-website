@@ -250,6 +250,87 @@ function initPlantFilters() {
   });
 }
 
+function initPlantCards() {
+  const floweringPeriods = new Map([
+    ["Amelanchier ovalis", "Avril à mai"],
+    ["Arbutus unedo", "Octobre à janvier"],
+    ["Cotinus coggygria", "Juin à juillet"],
+    ["Cupressus sempervirens", "Mars à avril"],
+    ["Viburnum tinus", "Novembre à avril"],
+    ["Olea europaea", "Mai à juin"],
+    ["Pyrus spinosa", "Mars à avril"],
+    ["Tamarix gallica", "Mai à juin"],
+    ["Salvia pratensis", "Mai à juillet"],
+    ["Centranthus ruber", "Avril à octobre"],
+    ["Echinops ritro", "Juillet à septembre"],
+    ["Foeniculum vulgare", "Juillet à septembre"],
+    ["Helichrysum stoechas", "Juin à septembre"],
+    ["Lavandula angustifolia", "Juin à août"],
+    ["Leucanthemum vulgare", "Juin à septembre"],
+    ["Narcissus tazetta", "Février à avril"],
+    ["Orlaya grandiflora", "Avril à juin"],
+    ["Scabiosa columbaria", "Juin à octobre"],
+    ["Agapanthus africanus", "Juin à août"],
+    ["Callistemon citrinus", "Avril à juillet"],
+    ["Oenothera lindheimeri", "Juin à octobre"],
+    ["Punica granatum", "Mai à juillet"],
+    ["Grevillea rosmarinifolia", "Printemps et automne"],
+    ["Kniphofia uvaria", "Juin à septembre"],
+    ["Lagerstroemia indica", "Juillet à octobre"],
+    ["Leucadendron salignum", "Janvier à avril"],
+    ["Leonotis leonurus", "Août à novembre"],
+    ["Perovskia atriplicifolia", "Juillet à octobre"],
+    ["Salvia greggii", "Mai à octobre"]
+  ]);
+
+  const openPlantCard = (card) => {
+    const name = card.querySelector("h3")?.textContent?.trim();
+    const latinName = card.querySelector(":scope > i")?.textContent?.trim();
+    const category = card.querySelector(":scope > p")?.textContent?.trim();
+    const image = card.querySelector("img");
+    if (!name || !latinName || !category || !image) return;
+
+    const modal = document.createElement("div");
+    modal.className = "plant-modal";
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("aria-label", `Fiche plante : ${name}`);
+    modal.innerHTML = `
+      <button class="modal-close" type="button" aria-label="Fermer la fiche de ${name}">×</button>
+      <article>
+        <figure><img src="${image.currentSrc || image.src}" alt="${image.alt}"></figure>
+        <div>
+          <p class="kicker">${category}</p>
+          <h2>${name}</h2>
+          <i>${latinName}</i>
+          <p>Cette plante fait partie de la palette végétale proposée pour le projet Château Gasqui.</p>
+          <span>Floraison · ${floweringPeriods.get(latinName) || "Période à préciser"}</span>
+        </div>
+      </article>`;
+
+    const close = () => {
+      modal.remove();
+      document.removeEventListener("keydown", onKeydown);
+      card.focus();
+    };
+    const onKeydown = (event) => {
+      if (event.key === "Escape") close();
+    };
+
+    modal.querySelector(".modal-close")?.addEventListener("click", close);
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) close();
+    });
+    document.addEventListener("keydown", onKeydown);
+    document.body.append(modal);
+    modal.querySelector(".modal-close")?.focus();
+  };
+
+  document.querySelectorAll(".plant-card").forEach((card) => {
+    card.addEventListener("click", () => openPlantCard(card));
+  });
+}
+
 function initMenu() {
   const menuButton = document.querySelector(".menu-button");
   const navigation = document.querySelector("#main-navigation");
@@ -306,6 +387,7 @@ async function loadProject() {
   initAnimationReplays();
   initZones();
   initPlantFilters();
+  initPlantCards();
   initMenu();
   animateStats();
 }
