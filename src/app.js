@@ -70,6 +70,16 @@ const projects = [
     ]
   },
   {
+    slug: "batiment-s-universite-garde",
+    title: "Bâtiment S",
+    suffix: "- Université de Toulon",
+    href: "batiment-s.html",
+    images: [
+      { file: "Bâtiment S 01.png", orientation: "landscape" },
+      { file: "Bâtiment S 02.png", orientation: "landscape" }
+    ]
+  },
+  {
     slug: "projet-dionys-hyeres",
     title: "Projet Dionys",
     suffix: "- Hyères",
@@ -87,16 +97,6 @@ const projects = [
     images: [
       { file: "Page Blanche 01.jpg", orientation: "landscape" },
       { file: "Page Blanche 02.jpg", orientation: "landscape" }
-    ]
-  },
-  {
-    slug: "batiment-s-universite-garde",
-    title: "Bâtiment S",
-    suffix: "- Université de Toulon",
-    href: "batiment-s.html",
-    images: [
-      { file: "Bâtiment S 01.png", orientation: "landscape" },
-      { file: "Bâtiment S 02.png", orientation: "landscape" }
     ]
   },
   {
