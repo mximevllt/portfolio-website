@@ -1011,6 +1011,11 @@ body.hero-cursor-active * {
     font-size: clamp(0.64rem, 2.6vw, 0.76rem);
   }
 
+  .project-badge--perchee-design-parade-2026 {
+    flex-basis: 100%;
+    width: fit-content;
+  }
+
   .flowing-menu__item.has-gallery:is(:hover, :focus-visible, .is-active) .project-preview {
     max-height: 260px;
   }

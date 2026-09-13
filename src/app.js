@@ -123,7 +123,7 @@ function projectImageUrl(fileName) {
 
 function renderProjectTitle(project) {
   const suffix = project.suffix ? `<em>${project.suffix}</em>` : "";
-  const badge = project.badge ? `<span class="project-badge">${project.badge}</span>` : "";
+  const badge = project.badge ? `<span class="project-badge project-badge--${project.slug}">${project.badge}</span>` : "";
   return `<span class="project-title"><h3>${project.title}</h3>${suffix}${badge}</span>`;
 }
 
