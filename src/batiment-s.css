@@ -48,13 +48,13 @@
   display: grid;
   grid-template-columns: minmax(260px, 0.78fr) minmax(0, 1.22fr);
   gap: clamp(28px, 5vw, 92px);
-  align-items: end;
+  align-items: start;
   padding-top: clamp(38px, 7vw, 100px);
 }
 
 .bs-hero__copy {
   max-width: 680px;
-  padding-bottom: clamp(0px, 3vw, 42px);
+  padding-bottom: 0;
 }
 
 .bs-hero h1 {
@@ -86,6 +86,10 @@
   min-height: min(68svh, 720px);
   display: block;
   object-fit: cover;
+}
+
+.bs-hero__image {
+  margin-top: 34px;
 }
 
 .bs-intro,
@@ -145,7 +149,7 @@
   display: grid;
   grid-template-columns: minmax(240px, 0.35fr) minmax(0, 0.65fr);
   gap: clamp(35px, 7vw, 140px);
-  align-items: end;
+  align-items: start;
 }
 
 .bs-existing__heading h2 {
@@ -287,7 +291,7 @@
 }
 
 .bs-spaces__copy {
-  padding-top: clamp(0px, 4vw, 70px);
+  padding-top: 0;
 }
 
 .bs-spaces h2 {
@@ -377,6 +381,7 @@
 
   .bs-hero__image {
     order: -1;
+    margin-top: 0;
   }
 
   .bs-hero__image img {
