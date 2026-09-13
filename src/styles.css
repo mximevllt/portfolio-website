@@ -1012,8 +1012,11 @@ body.hero-cursor-active * {
   }
 
   .project-badge--perchee-design-parade-2026 {
+    flex: 0 0 auto;
+  }
+
+  .project-title:has(.project-badge--perchee-design-parade-2026) h3 {
     flex-basis: 100%;
-    width: fit-content;
   }
 
   .flowing-menu__item.has-gallery:is(:hover, :focus-visible, .is-active) .project-preview {
@@ -1021,7 +1024,7 @@ body.hero-cursor-active * {
   }
 
   .flowing-menu__item.has-unavailable-note:is(:hover, :focus-visible, .is-active) .project-preview {
-    max-height: 360px;
+    max-height: 460px;
   }
 
   .project-preview__grid,
@@ -1126,6 +1129,10 @@ body.hero-cursor-active * {
   .flowing-menu__item.has-gallery.is-active .project-preview {
     max-height: 260px;
     opacity: 1;
+  }
+
+  .flowing-menu__item.has-unavailable-note.is-active .project-preview {
+    max-height: 460px;
   }
 }
 
