@@ -9,17 +9,6 @@ const siteHeader = document.querySelector(".site-header");
 
 const projects = [
   {
-    slug: "clocher-saint-louis",
-    title: "Clocher Saint-Louis",
-    badge: "Octobre 2026",
-    note: "plus d'informations à venir",
-    images: [
-      { file: "Clocher Saint-Louis - Entree.png", orientation: "landscape" },
-      { file: "Clocher Saint-Louis - Chambre.png", orientation: "landscape" },
-      { file: "Clocher Saint-Louis - WC.png", orientation: "portrait" }
-    ]
-  },
-  {
     slug: "perchee-design-parade-2026",
     title: "Perchée",
     badge: "Design Parade 2026",
@@ -28,6 +17,17 @@ const projects = [
       { file: "Perchée 02.jpg", orientation: "portrait" },
       { file: "Perchée 01.png", orientation: "landscape" },
       { file: "Perchée 03.jpg", orientation: "portrait" }
+    ]
+  },
+  {
+    slug: "duplex-pralong-courchevel-1850",
+    title: "Duplex Pralong",
+    suffix: "- Courchevel 1850",
+    href: "pralong.html",
+    images: [
+      { file: "/assets/pralong/fauteuil.png", orientation: "portrait" },
+      { file: "/assets/pralong/vue-nord-paysage.jpg", orientation: "landscape" },
+      { file: "/assets/pralong/applique-pinturault.jpg", orientation: "square" }
     ]
   },
   {
@@ -70,17 +70,6 @@ const projects = [
     ]
   },
   {
-    slug: "duplex-pralong-courchevel-1850",
-    title: "Duplex Pralong",
-    suffix: "- Courchevel 1850",
-    href: "pralong.html",
-    images: [
-      { file: "/assets/pralong/fauteuil.png", orientation: "portrait" },
-      { file: "/assets/pralong/vue-nord-paysage.jpg", orientation: "landscape" },
-      { file: "/assets/pralong/applique-pinturault.jpg", orientation: "square" }
-    ]
-  },
-  {
     slug: "batiment-s-universite-garde",
     title: "Bâtiment S",
     suffix: "- Université de Toulon",
@@ -88,6 +77,17 @@ const projects = [
     images: [
       { file: "Bâtiment S 01.png", orientation: "landscape" },
       { file: "Bâtiment S 02.png", orientation: "landscape" }
+    ]
+  },
+  {
+    slug: "clocher-saint-louis",
+    title: "Clocher Saint-Louis",
+    badge: "Octobre 2026",
+    note: "plus d'informations à venir",
+    images: [
+      { file: "Clocher Saint-Louis - Entree.png", orientation: "landscape" },
+      { file: "Clocher Saint-Louis - Chambre.png", orientation: "landscape" },
+      { file: "Clocher Saint-Louis - WC.png", orientation: "portrait" }
     ]
   },
   {
