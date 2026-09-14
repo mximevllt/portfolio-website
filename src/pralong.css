@@ -12,6 +12,12 @@
   background: var(--pralong-cream);
 }
 
+.pralong-page .site-header,
+.pralong-page .site-menu {
+  color: var(--pralong-paper);
+  background: var(--pralong-brown);
+}
+
 .pralong-page main {
   overflow: hidden;
 }
@@ -347,7 +353,7 @@
 .pralong-pinturault__visual img,
 .pralong-pinturault__entry img {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  height: clamp(340px, 36vw, 520px);
   object-fit: cover;
 }
 
@@ -451,17 +457,39 @@
 
   .pralong-atmosphere figure,
   .pralong-atmosphere img {
-    min-height: 780px;
+    min-height: 700px;
   }
 
   .pralong-atmosphere::after {
-    background: linear-gradient(0deg, rgba(23, 14, 10, 0.88) 0%, rgba(23, 14, 10, 0.02) 68%);
+    display: none;
+  }
+
+  .pralong-atmosphere {
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    padding: 56px 0;
+  }
+
+  .pralong-atmosphere figure {
+    flex: 0 0 56%;
+  }
+
+  .pralong-atmosphere img {
+    width: 100%;
+    object-position: center;
   }
 
   .pralong-atmosphere__copy {
-    right: 20px;
-    bottom: 48px;
-    width: calc(100% - 40px);
+    position: relative;
+    right: auto;
+    bottom: auto;
+    z-index: 1;
+    flex: 0 0 58%;
+    width: auto;
+    margin: 0 0 38px -20%;
+    padding: 28px 22px;
+    background: var(--pralong-brown);
   }
 
   .pralong-section-head {
@@ -497,6 +525,7 @@
 
   .pralong-pinturault__sketch {
     width: min(75%, 280px);
-    margin: 8px 0 0;
+    margin: 8px auto 0;
+    justify-self: center;
   }
 }
