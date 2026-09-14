@@ -1,3 +1,5 @@
+import("./instagram-browser.js").catch(() => {});
+
 const menuToggle = document.querySelector(".menu-toggle");
 const menuLinks = document.querySelectorAll(".site-menu a");
 const dotCanvas = document.querySelector("#dotField");
