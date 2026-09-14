@@ -70,6 +70,17 @@ const projects = [
     ]
   },
   {
+    slug: "duplex-pralong-courchevel-1850",
+    title: "Duplex Pralong",
+    suffix: "- Courchevel 1850",
+    href: "pralong.html",
+    images: [
+      { file: "/assets/pralong/fauteuil.png", orientation: "portrait" },
+      { file: "/assets/pralong/vue-nord-paysage.jpg", orientation: "landscape" },
+      { file: "/assets/pralong/applique-pinturault.jpg", orientation: "square" }
+    ]
+  },
+  {
     slug: "batiment-s-universite-garde",
     title: "Bâtiment S",
     suffix: "- Université de Toulon",
@@ -118,6 +129,7 @@ const projects = [
 ];
 
 function projectImageUrl(fileName) {
+  if (fileName.startsWith("/")) return encodeURI(fileName);
   return encodeURI(`/assets/projects/${fileName}`);
 }
 

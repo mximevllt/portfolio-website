@@ -1,0 +1,542 @@
+:root {
+  --pralong-ink: #2e231f;
+  --pralong-brown: #4a2f24;
+  --pralong-copper: #9a6a4d;
+  --pralong-paper: #eee7dd;
+  --pralong-cream: #f7f2ea;
+  --pralong-line: rgba(46, 35, 31, 0.2);
+}
+
+.pralong-page {
+  color: var(--pralong-ink);
+  background: var(--pralong-cream);
+}
+
+.pralong-page main {
+  overflow: hidden;
+}
+
+.pralong-page figure {
+  margin: 0;
+}
+
+.pralong-page img {
+  display: block;
+  width: 100%;
+}
+
+.pralong-frame {
+  width: min(100% - 80px, 1480px);
+  margin-inline: auto;
+}
+
+.pralong-eyebrow {
+  margin: 0 0 22px;
+  color: var(--pralong-copper);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.pralong-hero {
+  position: relative;
+  min-height: 100svh;
+  color: var(--pralong-cream);
+  background: var(--pralong-ink);
+}
+
+.pralong-hero::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(24, 15, 11, 0.68) 0%, rgba(24, 15, 11, 0.12) 54%, rgba(24, 15, 11, 0.04) 100%);
+  content: "";
+}
+
+.pralong-hero__image,
+.pralong-hero__image img {
+  width: 100%;
+  min-height: 100svh;
+}
+
+.pralong-hero__image img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.pralong-hero__title {
+  position: absolute;
+  z-index: 1;
+  left: max(40px, calc((100vw - 1480px) / 2));
+  bottom: clamp(58px, 8vw, 120px);
+  width: min(760px, calc(100% - 80px));
+}
+
+.pralong-hero__title p,
+.pralong-hero__title span {
+  margin: 0;
+  font-size: clamp(0.66rem, 0.8vw, 0.82rem);
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.pralong-hero__title h1 {
+  margin: 24px 0 30px;
+  font-family: "Gambarino", Georgia, serif;
+  font-size: clamp(5rem, 11vw, 10.6rem);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 0.75;
+}
+
+.pralong-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(70px, 11vw, 180px);
+  padding-block: clamp(110px, 13vw, 200px);
+}
+
+.pralong-intro h2,
+.pralong-section-head h2,
+.pralong-before h2,
+.pralong-atmosphere h2,
+.pralong-pinturault h2,
+.pralong-closing h2 {
+  margin: 0;
+  font-family: "Gambarino", Georgia, serif;
+  font-size: clamp(3rem, 5.4vw, 5.8rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 0.96;
+}
+
+.pralong-intro__text {
+  max-width: 680px;
+  padding-top: 42px;
+  border-top: 1px solid var(--pralong-line);
+}
+
+.pralong-intro__text p,
+.pralong-before__note,
+.pralong-section-head > p:last-child,
+.pralong-piece p,
+.pralong-lighting article p,
+.pralong-atmosphere__copy > p:last-child,
+.pralong-pinturault__copy > p:not(.pralong-eyebrow) {
+  margin: 0;
+  color: rgba(46, 35, 31, 0.76);
+  font-size: clamp(0.98rem, 1.18vw, 1.12rem);
+  font-weight: 300;
+  line-height: 1.72;
+}
+
+.pralong-intro__text p + p,
+.pralong-pinturault__copy p + p {
+  margin-top: 1.25em;
+}
+
+.pralong-before {
+  padding-bottom: clamp(110px, 14vw, 220px);
+}
+
+.pralong-before header {
+  display: grid;
+  grid-template-columns: 0.65fr 1.35fr;
+  gap: 7vw;
+  align-items: end;
+  margin-bottom: 55px;
+}
+
+.pralong-before__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.pralong-before__grid figure {
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+.pralong-before__grid img {
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.58) contrast(0.94);
+}
+
+.pralong-before__note {
+  width: min(580px, 100%);
+  margin: 34px 0 0 auto;
+}
+
+.pralong-atmosphere {
+  position: relative;
+  color: var(--pralong-cream);
+  background: var(--pralong-ink);
+}
+
+.pralong-atmosphere figure,
+.pralong-atmosphere img {
+  min-height: min(88svh, 980px);
+}
+
+.pralong-atmosphere img {
+  object-fit: cover;
+}
+
+.pralong-atmosphere::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(23, 14, 10, 0.06) 24%, rgba(23, 14, 10, 0.72) 100%);
+  content: "";
+}
+
+.pralong-atmosphere__copy {
+  position: absolute;
+  z-index: 1;
+  right: max(40px, calc((100vw - 1480px) / 2));
+  bottom: clamp(55px, 8vw, 120px);
+  width: min(520px, calc(100% - 80px));
+}
+
+.pralong-atmosphere__copy .pralong-eyebrow,
+.pralong-pinturault__visual + .pralong-pinturault__story .pralong-eyebrow {
+  color: #d3a887;
+}
+
+.pralong-atmosphere__copy > p:last-child {
+  margin-top: 30px;
+  color: rgba(247, 242, 234, 0.78);
+}
+
+.pralong-furniture,
+.pralong-lighting {
+  padding-block: clamp(120px, 14vw, 220px);
+}
+
+.pralong-section-head {
+  display: grid;
+  grid-template-columns: 0.48fr 0.9fr 0.62fr;
+  gap: clamp(35px, 6vw, 100px);
+  align-items: end;
+  margin-bottom: clamp(80px, 10vw, 150px);
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--pralong-line);
+}
+
+.pralong-piece {
+  display: grid;
+  align-items: center;
+}
+
+.pralong-piece figure {
+  overflow: hidden;
+}
+
+.pralong-piece img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.pralong-piece h3,
+.pralong-lighting h3 {
+  margin: 22px 0 26px;
+  font-family: "Gambarino", Georgia, serif;
+  font-size: clamp(2rem, 3.4vw, 3.8rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.pralong-piece span {
+  color: var(--pralong-copper);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.pralong-piece--chair {
+  grid-template-columns: minmax(0, 0.88fr) minmax(320px, 0.72fr);
+  gap: clamp(60px, 10vw, 160px);
+}
+
+.pralong-piece--chair figure {
+  aspect-ratio: 4 / 5;
+}
+
+.pralong-piece--tables {
+  grid-template-columns: 0.65fr 1fr 0.55fr;
+  gap: 24px;
+  margin-top: clamp(100px, 15vw, 220px);
+}
+
+.pralong-piece--tables > div {
+  align-self: end;
+  padding-right: clamp(20px, 4vw, 70px);
+}
+
+.pralong-piece--tables .pralong-piece__landscape {
+  aspect-ratio: 16 / 10;
+}
+
+.pralong-piece--tables .pralong-piece__portrait {
+  aspect-ratio: 4 / 5;
+}
+
+.pralong-lighting {
+  border-top: 1px solid var(--pralong-line);
+}
+
+.pralong-lighting__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 80px);
+}
+
+.pralong-lighting article:nth-child(2) {
+  margin-top: clamp(90px, 12vw, 180px);
+}
+
+.pralong-lighting figure {
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+}
+
+.pralong-lighting img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.pralong-lighting h3 {
+  max-width: 520px;
+  margin-top: 34px;
+  font-size: clamp(2rem, 3vw, 3.3rem);
+}
+
+.pralong-lighting article p {
+  max-width: 540px;
+}
+
+.pralong-pinturault {
+  color: var(--pralong-paper);
+  background: var(--pralong-brown);
+}
+
+.pralong-pinturault__visual figure {
+  width: min(78vw, 1120px);
+  margin: 0 auto;
+  transform: translateY(clamp(70px, 8vw, 120px));
+}
+
+.pralong-pinturault__visual img {
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.pralong-pinturault__story {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(60px, 10vw, 160px);
+  align-items: center;
+  padding-top: clamp(180px, 20vw, 300px);
+  padding-bottom: clamp(110px, 14vw, 220px);
+}
+
+.pralong-pinturault__copy > p:not(.pralong-eyebrow) {
+  color: rgba(238, 231, 221, 0.78);
+}
+
+.pralong-pinturault__copy h2 {
+  margin-bottom: 38px;
+}
+
+.pralong-pinturault__sketch {
+  padding: clamp(20px, 4vw, 55px);
+  background: #b89178;
+}
+
+.pralong-pinturault__sketch img {
+  mix-blend-mode: multiply;
+}
+
+.pralong-entry {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.65fr) minmax(200px, 0.35fr);
+  gap: clamp(45px, 8vw, 130px);
+  align-items: end;
+  width: min(100% - 80px, 1180px);
+  margin-inline: auto;
+  padding-bottom: clamp(120px, 15vw, 230px);
+}
+
+.pralong-entry img {
+  max-height: 880px;
+  object-fit: cover;
+}
+
+.pralong-entry figcaption {
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(238, 231, 221, 0.28);
+  color: rgba(238, 231, 221, 0.7);
+  font-size: 0.78rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.pralong-closing {
+  padding-block: clamp(130px, 17vw, 260px);
+}
+
+.pralong-closing h2 {
+  max-width: 1180px;
+}
+
+@media (max-width: 900px) {
+  .pralong-frame {
+    width: min(100% - 40px, 1480px);
+  }
+
+  .pralong-hero__title {
+    left: 20px;
+    width: calc(100% - 40px);
+  }
+
+  .pralong-intro,
+  .pralong-before header,
+  .pralong-section-head,
+  .pralong-piece--chair,
+  .pralong-pinturault__story {
+    grid-template-columns: 1fr;
+  }
+
+  .pralong-intro,
+  .pralong-before header,
+  .pralong-section-head,
+  .pralong-piece--chair,
+  .pralong-pinturault__story {
+    gap: 42px;
+  }
+
+  .pralong-intro__text {
+    padding-top: 30px;
+  }
+
+  .pralong-before__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pralong-section-head > p:last-child {
+    max-width: 620px;
+  }
+
+  .pralong-piece--chair figure {
+    width: min(84%, 620px);
+  }
+
+  .pralong-piece--tables {
+    grid-template-columns: 1fr 0.58fr;
+  }
+
+  .pralong-piece--tables > div {
+    grid-column: 1 / -1;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .pralong-hero__image img {
+    object-position: 38% center;
+  }
+
+  .pralong-hero::after {
+    background: linear-gradient(0deg, rgba(24, 15, 11, 0.78) 0%, rgba(24, 15, 11, 0.06) 70%);
+  }
+
+  .pralong-hero__title h1 {
+    margin-block: 18px 24px;
+    font-size: clamp(4.3rem, 23vw, 7rem);
+  }
+
+  .pralong-intro,
+  .pralong-furniture,
+  .pralong-lighting {
+    padding-block: 100px;
+  }
+
+  .pralong-before {
+    padding-bottom: 100px;
+  }
+
+  .pralong-before__grid {
+    gap: 10px;
+  }
+
+  .pralong-atmosphere figure,
+  .pralong-atmosphere img {
+    min-height: 780px;
+  }
+
+  .pralong-atmosphere::after {
+    background: linear-gradient(0deg, rgba(23, 14, 10, 0.88) 0%, rgba(23, 14, 10, 0.02) 68%);
+  }
+
+  .pralong-atmosphere__copy {
+    right: 20px;
+    bottom: 48px;
+    width: calc(100% - 40px);
+  }
+
+  .pralong-section-head {
+    margin-bottom: 72px;
+    padding-bottom: 34px;
+  }
+
+  .pralong-piece--chair figure {
+    width: 100%;
+  }
+
+  .pralong-piece--tables {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 100px;
+  }
+
+  .pralong-piece--tables .pralong-piece__portrait {
+    display: none;
+  }
+
+  .pralong-lighting__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pralong-lighting article:nth-child(2) {
+    margin-top: 55px;
+  }
+
+  .pralong-pinturault__visual figure {
+    width: 100%;
+    transform: none;
+  }
+
+  .pralong-pinturault__story {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  .pralong-pinturault__sketch {
+    padding: 14px;
+  }
+
+  .pralong-entry {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    width: calc(100% - 40px);
+    padding-bottom: 100px;
+  }
+
+  .pralong-entry img {
+    max-height: none;
+  }
+}
