@@ -178,32 +178,38 @@
 
 .pralong-atmosphere {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--pralong-cream);
-  background: var(--pralong-ink);
+  background: var(--pralong-cream);
+  padding-block: clamp(100px, 12vw, 180px);
 }
 
-.pralong-atmosphere figure,
-.pralong-atmosphere img {
-  min-height: min(88svh, 980px);
+.pralong-atmosphere figure {
+  flex: 0 0 auto;
+  width: min(52vw, 660px);
+  height: clamp(680px, 65vw, 900px);
 }
 
 .pralong-atmosphere img {
+  height: 100%;
   object-fit: cover;
 }
 
 .pralong-atmosphere::after {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(23, 14, 10, 0.06) 24%, rgba(23, 14, 10, 0.72) 100%);
-  content: "";
+  display: none;
 }
 
 .pralong-atmosphere__copy {
-  position: absolute;
   z-index: 1;
-  right: max(40px, calc((100vw - 1480px) / 2));
-  bottom: clamp(55px, 8vw, 120px);
-  width: min(520px, calc(100% - 80px));
+  position: relative;
+  right: auto;
+  bottom: auto;
+  width: min(34vw, 460px);
+  margin-left: clamp(-76px, -4vw, -34px);
+  padding: clamp(34px, 4vw, 62px);
+  background: var(--pralong-brown);
 }
 
 .pralong-atmosphere__copy .pralong-eyebrow,
@@ -457,39 +463,43 @@
 
   .pralong-atmosphere figure,
   .pralong-atmosphere img {
-    min-height: 700px;
+    min-height: 780px;
   }
 
   .pralong-atmosphere::after {
-    display: none;
+    position: absolute;
+    inset: 0;
+    display: block;
+    background: linear-gradient(0deg, rgba(23, 14, 10, 0.88) 0%, rgba(23, 14, 10, 0.02) 68%);
+    content: "";
   }
 
   .pralong-atmosphere {
-    display: flex;
-    align-items: flex-end;
-    overflow: hidden;
-    padding: 56px 0;
+    display: block;
+    padding: 0;
+    background: var(--pralong-ink);
   }
 
   .pralong-atmosphere figure {
-    flex: 0 0 56%;
+    width: auto;
+    height: auto;
   }
 
   .pralong-atmosphere img {
     width: 100%;
+    height: auto;
     object-position: center;
   }
 
   .pralong-atmosphere__copy {
-    position: relative;
-    right: auto;
-    bottom: auto;
+    position: absolute;
+    right: 20px;
+    bottom: 48px;
     z-index: 1;
-    flex: 0 0 58%;
-    width: auto;
-    margin: 0 0 38px -20%;
-    padding: 28px 22px;
-    background: var(--pralong-brown);
+    width: calc(100% - 40px);
+    margin: 0;
+    padding: 0;
+    background: transparent;
   }
 
   .pralong-section-head {
