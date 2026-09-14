@@ -457,12 +457,40 @@
 }
 
 @media (max-width: 620px) {
-  .pralong-hero__image img {
-    object-position: 38% center;
+  .pralong-hero {
+    min-height: 0;
+    padding-top: var(--nav-height);
+    padding-bottom: 72px;
+    color: var(--pralong-ink);
+    background: var(--pralong-cream);
   }
 
   .pralong-hero::after {
-    background: linear-gradient(0deg, rgba(24, 15, 11, 0.78) 0%, rgba(24, 15, 11, 0.06) 70%);
+    display: none;
+  }
+
+  .pralong-hero__image,
+  .pralong-hero__image img {
+    min-height: 0;
+    height: auto;
+  }
+
+  .pralong-hero__image img {
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .pralong-hero__title {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: calc(100% - 40px);
+    margin: 50px auto 0;
+  }
+
+  .pralong-hero__title p,
+  .pralong-hero__title span {
+    color: var(--pralong-copper);
   }
 
   .pralong-hero__title h1 {
