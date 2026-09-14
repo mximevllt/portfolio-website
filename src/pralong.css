@@ -179,17 +179,15 @@
 .pralong-atmosphere {
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
   color: var(--pralong-cream);
-  background: var(--pralong-cream);
-  padding-block: clamp(100px, 12vw, 180px);
+  background: var(--pralong-brown);
 }
 
 .pralong-atmosphere figure {
-  flex: 0 0 auto;
-  width: min(52vw, 660px);
-  height: clamp(680px, 65vw, 900px);
+  flex: 0 0 62%;
+  width: auto;
+  height: clamp(480px, 50vw, 720px);
 }
 
 .pralong-atmosphere img {
@@ -204,11 +202,14 @@
 .pralong-atmosphere__copy {
   z-index: 1;
   position: relative;
-  right: auto;
-  bottom: auto;
-  width: min(34vw, 460px);
-  margin-left: clamp(-76px, -4vw, -34px);
-  padding: clamp(34px, 4vw, 62px);
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  width: auto;
+  height: clamp(480px, 50vw, 720px);
+  margin: 0;
+  padding: clamp(42px, 5vw, 96px);
   background: var(--pralong-brown);
 }
 
@@ -493,10 +494,12 @@
 
   .pralong-atmosphere__copy {
     position: absolute;
+    display: block;
     right: 20px;
     bottom: 48px;
     z-index: 1;
     width: calc(100% - 40px);
+    height: auto;
     margin: 0;
     padding: 0;
     background: transparent;
