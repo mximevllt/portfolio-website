@@ -278,6 +278,16 @@
   aspect-ratio: 4 / 5;
 }
 
+.pralong-piece--custom {
+  grid-template-columns: minmax(320px, 0.72fr) minmax(0, 0.88fr);
+  gap: clamp(60px, 10vw, 160px);
+  margin-top: clamp(100px, 14vw, 200px);
+}
+
+.pralong-piece--custom figure {
+  aspect-ratio: 4 / 5;
+}
+
 .pralong-piece--tables {
   grid-template-columns: 0.65fr 1fr 0.55fr;
   gap: 24px;
@@ -402,6 +412,7 @@
   .pralong-before header,
   .pralong-section-head,
   .pralong-piece--chair,
+  .pralong-piece--custom,
   .pralong-pinturault__story {
     grid-template-columns: 1fr;
   }
@@ -410,6 +421,7 @@
   .pralong-before header,
   .pralong-section-head,
   .pralong-piece--chair,
+  .pralong-piece--custom,
   .pralong-pinturault__story {
     gap: 42px;
   }
@@ -427,6 +439,10 @@
   }
 
   .pralong-piece--chair figure {
+    width: min(84%, 620px);
+  }
+
+  .pralong-piece--custom figure {
     width: min(84%, 620px);
   }
 
@@ -517,6 +533,10 @@
   }
 
   .pralong-piece--chair figure {
+    width: 100%;
+  }
+
+  .pralong-piece--custom figure {
     width: 100%;
   }
 
