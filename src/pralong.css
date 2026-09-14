@@ -290,11 +290,17 @@
 }
 
 .pralong-piece--tables .pralong-piece__landscape {
-  aspect-ratio: 16 / 10;
+  height: clamp(260px, 30vw, 500px);
 }
 
 .pralong-piece--tables .pralong-piece__portrait {
-  aspect-ratio: 4 / 5;
+  height: clamp(260px, 30vw, 500px);
+  overflow: hidden;
+}
+
+.pralong-piece--tables img {
+  height: 100%;
+  object-fit: cover;
 }
 
 .pralong-lighting {
@@ -518,6 +524,11 @@
     grid-template-columns: 1fr;
     gap: 12px;
     margin-top: 100px;
+  }
+
+  .pralong-piece--tables .pralong-piece__landscape {
+    height: auto;
+    aspect-ratio: 16 / 10;
   }
 
   .pralong-piece--tables .pralong-piece__portrait {
