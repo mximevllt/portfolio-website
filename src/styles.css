@@ -936,7 +936,7 @@ body.instagram-browser-prompt-open {
   z-index: 1000;
   inset: 0;
   display: grid;
-  align-items: end;
+  align-items: center;
   padding: 18px;
   background: rgba(31, 23, 23, 0.58);
   backdrop-filter: blur(8px);
@@ -980,7 +980,7 @@ body.instagram-browser-prompt-open {
   max-width: 390px;
   margin: 0;
   color: inherit;
-  font-family: "Gambarino", Georgia, serif;
+  font-family: "Funnel Display", ui-sans-serif, system-ui, sans-serif;
   font-size: clamp(2.35rem, 11vw, 3.7rem);
   font-weight: 400;
   letter-spacing: -0.035em;
