@@ -440,7 +440,7 @@ body.hero-cursor-active * {
 .project-link {
   position: relative;
   z-index: 1;
-  min-height: clamp(41px, 5vw, 66px);
+  min-height: clamp(47px, 5.75vw, 76px);
   width: min(100% - 84px, 1240px);
   display: grid;
   grid-template-columns: minmax(0, 1fr) max-content;
@@ -472,7 +472,7 @@ body.hero-cursor-active * {
 .project-title h3 {
   margin: 0;
   font-family: "Montserrat", ui-sans-serif, system-ui, sans-serif;
-  font-size: clamp(1.5rem, 3.8vw, 4.05rem);
+  font-size: clamp(1.425rem, 3.61vw, 3.85rem);
   font-weight: 200;
   line-height: 0.98;
   letter-spacing: 0;
