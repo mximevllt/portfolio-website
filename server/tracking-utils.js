@@ -104,6 +104,10 @@ export function isExcludedTrackingSource({ city = "", ipMasked = "" } = {}) {
     || (normalizedCity === "brignoles" && ipMasked === "92.150.184.xxx");
 }
 
+export function isRobotUserAgent(userAgent = "") {
+  return /bot|crawler|spider|crawling/i.test(String(userAgent));
+}
+
 function decodeHeader(value = "") {
   if (!value) return "";
 
@@ -116,9 +120,9 @@ function decodeHeader(value = "") {
 
 export function getDeviceType(userAgent = "") {
   const agent = userAgent.toLowerCase();
+  if (isRobotUserAgent(agent)) return "Robot";
   if (/ipad|tablet|kindle|silk/.test(agent)) return "Tablette";
   if (/mobi|iphone|android.*mobile|windows phone/.test(agent)) return "Smartphone";
-  if (/bot|crawler|spider|crawling/.test(agent)) return "Robot";
   return "Ordinateur";
 }
 

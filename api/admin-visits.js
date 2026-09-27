@@ -1,7 +1,9 @@
-import { isAuthorized, isExcludedTrackingSource, sendJson, supabaseRequest } from "../server/tracking-utils.js";
+import { isAuthorized, isExcludedTrackingSource, isRobotUserAgent, sendJson, supabaseRequest } from "../server/tracking-utils.js";
 
 function isVisibleTrackingRow(row) {
-  return !isExcludedTrackingSource({ city: row?.city, ipMasked: row?.ip_masked });
+  return !isExcludedTrackingSource({ city: row?.city, ipMasked: row?.ip_masked })
+    && row?.device_type !== "Robot"
+    && !isRobotUserAgent(row?.user_agent);
 }
 
 async function purgeExcludedTrackingRows() {
@@ -67,13 +69,15 @@ export default async function handler(request, response) {
       : await supabaseRequest(`${eventsPath}&limit=${eventLimit}`);
     const visitors = (Array.isArray(visitorRows) ? visitorRows : []).filter(isVisibleTrackingRow);
     const events = (Array.isArray(eventRows) ? eventRows : []).filter(isVisibleTrackingRow);
-    const totalVisits = Array.isArray(visitors)
-      ? visitors.reduce((total, visitor) => total + Number(visitor.visit_count || 0), 0)
-      : 0;
+    const countedPageViews = events.filter((event) => event.event_type !== "leave");
+    const visitorHashes = new Set(countedPageViews.map((event) => event.ip_hash).filter(Boolean));
+    const totalVisits = allEvents
+      ? countedPageViews.length
+      : visitors.reduce((total, visitor) => total + Number(visitor.visit_count || 0), 0);
 
     sendJson(response, 200, {
       generatedAt: new Date().toISOString(),
-      totalVisitors: Array.isArray(visitors) ? visitors.length : 0,
+      totalVisitors: allEvents ? visitorHashes.size : visitors.length,
       totalVisits,
       visitors: visitors || [],
       latestEvents: events || []

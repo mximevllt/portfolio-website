@@ -12,7 +12,7 @@ const updatedAtNode = document.querySelector("[data-updated-at]");
 
 const tokenKey = "portfolio-admin-token";
 let refreshTimer = 0;
-let latestVisitsExpanded = false;
+let latestVisitsExpanded = true;
 let journeysByIp = new Map();
 let latestDashboardData = null;
 let journeyRequestId = 0;
@@ -309,7 +309,7 @@ logoutButton?.addEventListener("click", () => {
   dashboardRequestId += 1;
   journeyRequestId += 1;
   latestDashboardData = null;
-  latestVisitsExpanded = false;
+  latestVisitsExpanded = true;
   journeysByIp = new Map();
   journeysLoading = false;
   dashboard.hidden = true;

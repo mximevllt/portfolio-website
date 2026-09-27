@@ -85,6 +85,7 @@ const projects = [
     slug: "clocher-saint-louis",
     title: "Clocher Saint-Louis",
     badge: "Octobre 2026",
+    badgeMobile: "10/26",
     note: "plus d'informations à venir",
     images: [
       { file: "Clocher Saint-Louis - Entree.png", orientation: "landscape" },
@@ -137,8 +138,8 @@ function projectImageUrl(fileName) {
 
 function renderProjectTitle(project) {
   const suffix = project.suffix ? `<em>${project.suffix}</em>` : "";
-  const badge = project.badge ? `<span class="project-badge project-badge--${project.slug}">${project.badge}</span>` : "";
-  return `<span class="project-title"><h3>${project.title}</h3>${suffix}${badge}</span>`;
+  const badge = project.badge ? `<span class="project-badge project-badge--${project.slug}"><span class="project-badge__label">${project.badge}</span>${project.badgeMobile ? `<span class="project-badge__mobile-label">${project.badgeMobile}</span>` : ""}</span>` : "";
+  return `<span class="project-title project-title--${project.slug}"><h3>${project.title}</h3>${suffix}${badge}</span>`;
 }
 
 function renderProjectNote(project) {
@@ -184,15 +185,13 @@ function renderProjects() {
   if (!flowingMenu) return;
 
   flowingMenu.innerHTML = projects
-    .map((project, index) => {
-      const number = String(index + 1).padStart(2, "0");
+    .map((project) => {
       const hasGallery = project.images.length ? " has-gallery" : "";
       const hasUnavailableNote = project.note && !project.href ? " has-unavailable-note" : "";
 
       return `
         <a class="flowing-menu__item${hasGallery}${hasUnavailableNote}" href="${project.href || `#${project.slug}`}">
           <span class="project-link">
-            <span class="project-index">${number}</span>
             ${renderProjectTitle(project)}
             ${renderProjectNote(project)}
           </span>

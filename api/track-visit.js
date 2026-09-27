@@ -6,6 +6,7 @@ import {
   getLocation,
   hashIp,
   isExcludedTrackingSource,
+  isRobotUserAgent,
   maskIp,
   readJsonBody,
   sendJson,
@@ -47,6 +48,10 @@ export default async function handler(request, response) {
 
     const now = new Date().toISOString();
     const userAgent = cleanString(getHeader(request, "user-agent"), 1200);
+    if (isRobotUserAgent(userAgent)) {
+      sendNoContent(response);
+      return;
+    }
     const ipHash = hashIp(ipAddress);
     const ipMasked = maskIp(ipAddress);
     const storeRawIp = process.env.TRACK_STORE_RAW_IP === "true";

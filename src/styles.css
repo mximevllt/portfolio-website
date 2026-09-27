@@ -414,32 +414,36 @@ body.hero-cursor-active * {
 
 .flowing-menu {
   width: 100%;
-  border-top: 1px solid rgba(56, 43, 43, 0.34);
+  margin: 0 auto;
 }
 
 .flowing-menu__item {
   position: relative;
   display: block;
   overflow: hidden;
-  border-bottom: 1px solid rgba(56, 43, 43, 0.34);
+  border: 0;
   color: var(--text);
   background: var(--background);
   transition: background 420ms ease, color 420ms ease, border-color 420ms ease;
 }
 
 .flowing-menu__item:is(:hover, :focus-visible, .is-active) {
-  border-bottom-color: rgba(255, 250, 244, 0.26);
   color: var(--background);
   background: var(--text);
+}
+
+.flowing-menu__item:is(:hover, :focus-visible, .is-active) .project-link {
+  min-height: 0;
+  padding: 25px 0 0;
 }
 
 .project-link {
   position: relative;
   z-index: 1;
-  min-height: clamp(82px, 10vw, 132px);
-  width: min(100% - 44px, 1280px);
+  min-height: clamp(41px, 5vw, 66px);
+  width: min(100% - 84px, 1240px);
   display: grid;
-  grid-template-columns: 64px minmax(0, 1fr) max-content;
+  grid-template-columns: minmax(0, 1fr) max-content;
   align-items: center;
   gap: clamp(18px, 4vw, 42px);
   margin: 0 auto;
@@ -467,9 +471,9 @@ body.hero-cursor-active * {
 
 .project-title h3 {
   margin: 0;
-  font-family: "Gambarino", Georgia, serif;
+  font-family: "Montserrat", ui-sans-serif, system-ui, sans-serif;
   font-size: clamp(1.5rem, 3.8vw, 4.05rem);
-  font-weight: 400;
+  font-weight: 200;
   line-height: 0.98;
   letter-spacing: 0;
 }
@@ -512,15 +516,19 @@ body.hero-cursor-active * {
   display: inline-flex;
   align-items: center;
   min-height: 28px;
-  padding: 4px 12px 5px;
+  padding: 5px 12px;
   border: 1px solid currentColor;
   border-radius: 999px;
   font-family: "Montserrat", ui-sans-serif, system-ui, sans-serif;
   font-size: clamp(0.68rem, 1vw, 0.82rem);
   font-style: italic;
   font-weight: 300;
-  line-height: 1;
+  line-height: 1.1;
   white-space: nowrap;
+}
+
+.project-badge__mobile-label {
+  display: none;
 }
 
 .project-preview {
@@ -532,17 +540,17 @@ body.hero-cursor-active * {
 }
 
 .flowing-menu__item.has-gallery:is(:hover, :focus-visible, .is-active) .project-preview {
-  max-height: clamp(230px, 32vw, 450px);
+  max-height: calc(clamp(230px, 30vw, 420px) + 50px);
   opacity: 1;
 }
 
 .project-preview__grid {
-  width: min(100% - 44px, 1280px);
+  width: calc(100% - 50px);
   display: grid;
   grid-template-columns: 1fr;
   gap: clamp(12px, 1.8vw, 22px);
   margin: 0 auto;
-  padding: 0 0 clamp(24px, 3.4vw, 46px);
+  padding: 25px 0;
 }
 
 .project-preview.layout-2 .project-preview__grid {
@@ -1071,9 +1079,13 @@ body.instagram-browser-prompt-open {
     width: min(100% - 36px, 980px);
   }
 
+  .flowing-menu {
+    width: 100%;
+  }
+
   .project-link {
-    width: min(100% - 36px, 1280px);
-    grid-template-columns: 42px minmax(0, 1fr);
+    width: min(100% - 36px, 980px);
+    grid-template-columns: minmax(0, 1fr);
     align-items: center;
     gap: clamp(12px, 4vw, 22px);
   }
@@ -1087,7 +1099,7 @@ body.instagram-browser-prompt-open {
   }
 
   .project-title {
-    align-items: baseline;
+    align-items: center;
     justify-content: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
@@ -1106,16 +1118,30 @@ body.instagram-browser-prompt-open {
 
   .project-badge {
     min-height: 24px;
-    padding: 4px 10px 5px;
+    padding: 5px 10px;
     font-size: clamp(0.64rem, 2.6vw, 0.76rem);
+  }
+
+  .project-badge__mobile-label {
+    display: inline;
+  }
+
+  .project-badge--clocher-saint-louis .project-badge__label {
+    display: none;
+  }
+
+  .project-title--clocher-saint-louis {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .project-title--clocher-saint-louis h3 {
+    white-space: nowrap;
+    font-size: clamp(1.12rem, 6.1vw, 2.1rem);
   }
 
   .project-badge--perchee-design-parade-2026 {
     flex: 0 0 auto;
-  }
-
-  .project-title:has(.project-badge--perchee-design-parade-2026) h3 {
-    flex-basis: 100%;
   }
 
   .flowing-menu__item.has-gallery:is(:hover, :focus-visible, .is-active) .project-preview {
@@ -1129,11 +1155,16 @@ body.instagram-browser-prompt-open {
   .project-preview__grid,
   .project-preview.layout-2 .project-preview__grid,
   .project-preview.layout-3 .project-preview__grid {
-    width: min(100% - 36px, 1280px);
+    width: calc(100% - 50px);
     grid-template-columns: 1fr;
   }
 
   .project-preview__frame {
+    height: 178px;
+  }
+
+  /* Keep this selector as specific as the desktop layout-3 height rule. */
+  .project-preview.layout-3 .project-preview__frame {
     height: 178px;
   }
 
@@ -1185,7 +1216,6 @@ body.instagram-browser-prompt-open {
 
 @media (hover: none), (pointer: coarse) {
   .flowing-menu__item:hover {
-    border-bottom-color: rgba(56, 43, 43, 0.34);
     color: var(--text);
     background: var(--background);
   }
@@ -1208,7 +1238,6 @@ body.instagram-browser-prompt-open {
   }
 
   .flowing-menu__item.is-active {
-    border-bottom-color: rgba(255, 250, 244, 0.26);
     color: var(--background);
     background: var(--text);
   }
