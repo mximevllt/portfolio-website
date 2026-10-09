@@ -4,6 +4,26 @@
   "framework": null,
   "rewrites": [
     {
+      "source": "/newsboard",
+      "destination": "https://atelier-continuum.vercel.app/newsboard"
+    },
+    {
+      "source": "/rsvp",
+      "destination": "https://atelier-continuum.vercel.app/newsboard/rsvp"
+    },
+    {
+      "source": "/preferences",
+      "destination": "https://atelier-continuum.vercel.app/newsboard/preferences"
+    },
+    {
+      "source": "/unsubscribe",
+      "destination": "https://atelier-continuum.vercel.app/newsboard/unsubscribe"
+    },
+    {
+      "source": "/evenement",
+      "destination": "https://atelier-continuum.vercel.app/newsboard/rsvp"
+    },
+    {
       "source": "/newsboard/:path*",
       "destination": "https://atelier-continuum.vercel.app/newsboard/:path*"
     },
