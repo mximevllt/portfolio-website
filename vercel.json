@@ -1,5 +1,27 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "framework": null
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/newsboard/:path*",
+      "destination": "https://atelier-continuum.vercel.app/newsboard/:path*"
+    },
+    {
+      "source": "/rsvp/:path*",
+      "destination": "https://atelier-continuum.vercel.app/newsboard/rsvp/:path*"
+    },
+    {
+      "source": "/preferences/:path*",
+      "destination": "https://atelier-continuum.vercel.app/newsboard/preferences/:path*"
+    },
+    {
+      "source": "/unsubscribe/:path*",
+      "destination": "https://atelier-continuum.vercel.app/newsboard/unsubscribe/:path*"
+    },
+    {
+      "source": "/evenement/:path*",
+      "destination": "https://atelier-continuum.vercel.app/newsboard/rsvp/:path*"
+    }
+  ]
 }
