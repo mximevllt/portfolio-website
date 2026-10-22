@@ -132,7 +132,9 @@ function isApartmentPage(event) {
 }
 
 function getApartmentVisitors(data) {
-  const events = [...(data.latestEvents || [])];
+  const events = journeysByIp.size
+    ? [...journeysByIp.values()].flat()
+    : [...(data.latestEvents || [])];
   const leavesBySession = new Map(events
     .filter((event) => event.event_type === "leave" && event.page_session_id)
     .map((event) => [event.page_session_id, event]));
