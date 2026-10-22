@@ -5,6 +5,7 @@ const refreshButton = document.querySelector("[data-admin-refresh]");
 const statusNode = document.querySelector("[data-admin-status]");
 const dashboard = document.querySelector("[data-admin-dashboard]");
 const tableBody = document.querySelector("[data-admin-visitors]");
+const apartmentTableBody = document.querySelector("[data-admin-apartment-visitors]");
 const eventsBody = document.querySelector("[data-admin-events]");
 const totalVisitorsNode = document.querySelector("[data-total-visitors]");
 const totalVisitsNode = document.querySelector("[data-total-visits]");
@@ -122,6 +123,73 @@ function formatPageCount(count) {
   return `${count} ${count === 1 ? "page visitée" : "pages visitées"}`;
 }
 
+function isApartmentPage(event) {
+  try {
+    return new URL(event.page_path || "", "https://portfolio.local").pathname.startsWith("/appartement/");
+  } catch {
+    return String(event.page_path || "").startsWith("/appartement/");
+  }
+}
+
+function getApartmentVisitors(data) {
+  const events = [...(data.latestEvents || [])];
+  const leavesBySession = new Map(events
+    .filter((event) => event.event_type === "leave" && event.page_session_id)
+    .map((event) => [event.page_session_id, event]));
+  const visitors = new Map();
+
+  for (const event of events) {
+    if (event.event_type === "leave" || !event.ip_hash || !isApartmentPage(event)) continue;
+    const visitor = visitors.get(event.ip_hash) || {
+      ...event,
+      pages: [],
+      durationSeconds: 0,
+      activeCount: 0,
+      unmeasuredCount: 0,
+      lastSeenAt: eventTime(event)
+    };
+    const leave = event.page_session_id ? leavesBySession.get(event.page_session_id) : null;
+    visitor.pages.push(event);
+    if (leave && leave.duration_seconds != null && Number.isFinite(Number(leave.duration_seconds))) {
+      visitor.durationSeconds += Math.max(0, Number(leave.duration_seconds));
+    } else if (Date.now() - eventTime(event) <= VISIT_GAP_MS) {
+      visitor.activeCount += 1;
+      visitor.durationSeconds += Math.max(0, Math.round((Date.now() - eventTime(event)) / 1000));
+    } else {
+      visitor.unmeasuredCount += 1;
+    }
+    visitor.lastSeenAt = Math.max(visitor.lastSeenAt, eventTime(event));
+    if (eventTime(event) >= eventTime(visitor)) Object.assign(visitor, event);
+    visitors.set(event.ip_hash, visitor);
+  }
+
+  return [...visitors.values()].sort((a, b) => b.lastSeenAt - a.lastSeenAt);
+}
+
+function renderApartmentVisitors(data) {
+  if (!apartmentTableBody) return;
+  const visitors = getApartmentVisitors(data);
+  apartmentTableBody.innerHTML = visitors.length ? visitors.map((visitor) => {
+    const durationLabels = [
+      visitor.activeCount ? `${visitor.activeCount} en cours` : "",
+      visitor.unmeasuredCount ? `${visitor.unmeasuredCount} durée incomplète` : ""
+    ].filter(Boolean).join(" · ");
+    const duration = visitor.pages.length === visitor.unmeasuredCount && !visitor.activeCount
+      ? "Durée inconnue"
+      : `${formatDuration(visitor.durationSeconds)}${durationLabels ? ` · ${durationLabels}` : ""}`;
+    return `<tr>
+      <td>${clean(visitor.location_label)}</td>
+      <td>${escapeHtml(visitor.ip_address || visitor.ip_masked || "-")}</td>
+      <td>${visitor.pages.length}</td>
+      <td>${clean(visitor.device_type)}</td>
+      <td>${clean(visitor.browser)}</td>
+      <td>${clean(formatPagePath(visitor.page_path))}</td>
+      <td>${escapeHtml(duration)}</td>
+      <td>${formatDate(new Date(visitor.lastSeenAt).toISOString())}</td>
+    </tr>`;
+  }).join("") : '<tr><td colspan="8">Aucune visite Appartement enregistrée.</td></tr>';
+}
+
 function renderJourney(ipHash) {
   if (journeysLoading && !journeysByIp.has(ipHash)) {
     return "<span>Chargement du parcours…</span>";
@@ -208,6 +276,7 @@ function renderRows(data) {
   totalVisitorsNode.textContent = String(data.totalVisitors || 0);
   totalVisitsNode.textContent = String(data.totalVisits || 0);
   updatedAtNode.textContent = formatDate(data.generatedAt);
+  renderApartmentVisitors(data);
 
   tableBody.innerHTML = (data.visitors || [])
     .map((visitor) => {
